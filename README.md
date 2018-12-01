@@ -43,7 +43,10 @@ import { F2Canvas } from 'taro-f2'
 
 export default class Index extends Component {
 
-  canvasInit(canvas, width, height, F2){
+  drawRadar(canvas, width, height, F2){
+
+    console.log(canvas, width, height, F2)
+
     const data = [
       { name: '超大盘能力', value: 6.5 },
       { name: '抗跌能力', value: 9.5 },
@@ -116,7 +119,7 @@ export default class Index extends Component {
   render () {
     return (
       <View className='index'>
-        <View style='width:100%;height:500px'><F2Canvas onInit={this.canvasInit.bind(this)}></F2Canvas></View>
+        <View style='width:100%;height:500px'><F2Canvas onInit={this.drawRadar.bind(this)}></F2Canvas></View>
       </View>
     )
   }
