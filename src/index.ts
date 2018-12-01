@@ -1,3 +1,1 @@
-import Timer from './components/timer/timer'
-
-export default Timer
+export { default as F2Canvas } from './components/f2-canvas/f2-canvas'

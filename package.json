@@ -1,7 +1,7 @@
 {
-  "name": "taro-ui-sample",
+  "name": "taro-f2",
   "version": "1.0.0",
-  "description": "Taro 第三方 UI 库示范用例",
+  "description": "Taro F2 图表组件封装",
   "main": "dist/index.js",
   "types": "./@types/index.d.ts",
   "files": [
@@ -74,5 +74,8 @@
     "simulant": "^0.2.2",
     "sinon": "^7.1.0",
     "typescript": "^3.0.1"
+  },
+  "dependencies": {
+    "@antv/f2": "^3.3.1"
   }
 }

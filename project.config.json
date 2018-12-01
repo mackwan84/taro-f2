@@ -1,7 +1,7 @@
 {
 	"miniprogramRoot": "dist/",
-	"projectname": "taro-ui-sample",
-	"description": "Taro 第三方 UI 库示范用例",
+	"projectname": "taro-f2",
+	"description": "Taro F2 图表组件",
 	"appid": "touristappid",
 	"setting": {
 		"urlCheck": true,
