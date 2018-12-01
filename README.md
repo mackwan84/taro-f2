@@ -39,7 +39,7 @@ import { F2Canvas } from '@tarojs/taro-f2'
 ```
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { F2Canvas } from '@tarojs/taro-f2'
+import { F2Canvas } from 'taro-f2'
 
 export default class Index extends Component {
 
