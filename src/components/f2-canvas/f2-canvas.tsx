@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import {Canvas} from '@tarojs/components'
 import PropTypes from 'prop-types';
-import Renderer from './lib/renderer.js';
+import Renderer from './lib/renderer';
 
 const F2 = require('@antv/f2');
 if (process.env.TARO_ENV === 'weapp') {

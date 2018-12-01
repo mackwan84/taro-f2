@@ -1,2 +1,3 @@
-import Timer from './timer'
-export default Timer
+export { default as F2Canvas } from './f2-canvas'
+
+

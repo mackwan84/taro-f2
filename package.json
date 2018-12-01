@@ -1,9 +1,14 @@
 {
   "name": "taro-f2",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "description": "Taro F2 图表组件封装",
   "main": "dist/index.js",
   "types": "./@types/index.d.ts",
+  "homepage": "https://github.com/xioxin/taro-f2",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/xioxin/taro-f2.git"
+  },
   "files": [
     "dist",
     "@types"
@@ -28,7 +33,7 @@
       "git add"
     ]
   },
-  "author": "luckyadam",
+  "author": "xioxin",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -76,6 +81,7 @@
     "typescript": "^3.0.1"
   },
   "dependencies": {
-    "@antv/f2": "^3.3.1"
+    "@antv/f2": "^3.3.1",
+    "wolfy87-eventemitter": "^5.2.5"
   }
 }
