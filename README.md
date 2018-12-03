@@ -20,7 +20,7 @@ $ yarn add taro-f2
 
 在 Taro 文件中引入组件
 ```
-import { F2Canvas } from '@tarojs/taro-f2'
+import { F2Canvas } from 'taro-f2'
 ```
 
 > F2Canvas宽高为100% 设置宽高需要再外面套个View
