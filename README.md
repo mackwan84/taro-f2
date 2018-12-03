@@ -23,7 +23,7 @@ $ yarn add taro-f2
 import { F2Canvas } from 'taro-f2'
 ```
 
-> F2Canvas宽高为100% 设置宽高需要再外面套个View
+> F2Canvas宽高为100% 设置宽高需要在外面套个View
 
 
 ## 事件
