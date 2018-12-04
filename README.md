@@ -1,5 +1,7 @@
 # Taro多端F2图表
---------------------
+
+[![](https://img.shields.io/npm/v/taro-f2.svg?style=flat-square)](https://www.npmjs.com/package/taro-f2)
+
 目前支持 H5与小程序
 
 实现方法完全照搬: https://github.com/antvis/wx-f2
