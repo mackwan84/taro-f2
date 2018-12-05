@@ -1,10 +1,15 @@
 {
   "name": "taro-f2",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Taro F2 图表组件封装",
   "main": "dist/index.js",
   "types": "./@types/index.d.ts",
   "homepage": "https://github.com/xioxin/taro-f2",
+  "keywords": [
+    "taro",
+    "f2",
+    "charts"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/xioxin/taro-f2.git"
@@ -82,6 +87,7 @@
   },
   "dependencies": {
     "@antv/f2": "^3.3.1",
+    "@tarojs/rn-runner": "^1.2.0-beta.7",
     "wolfy87-eventemitter": "^5.2.5"
   }
 }

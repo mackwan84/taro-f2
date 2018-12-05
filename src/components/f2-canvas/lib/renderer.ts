@@ -17,11 +17,13 @@ const TEXT_ALIGN_MAP = {
 };
 
 export default class Renderer extends EventEmitter {
+  
+  ctx: CanvasRenderingContext2D
+  style = {}; // just mock
   constructor(wxCtx) {
     super();
     const self = this;
     self.ctx = wxCtx;
-    self.style = {}; // just mock
     self._initContext(wxCtx);
   }
 
@@ -34,14 +36,14 @@ export default class Renderer extends EventEmitter {
   _initContext(wxCtx) {
     Object.keys(CAPITALIZED_ATTRS_MAP).map(style => {
       Object.defineProperty(wxCtx, style, {
-      set: value => {
-      if (style == "textAlign") {
-      value = TEXT_ALIGN_MAP[value] ? TEXT_ALIGN_MAP[value] : value;
-    }
-    const name = 'set' + CAPITALIZED_ATTRS_MAP[style];
-    wxCtx[name](value);
-  }
-  });
-  });
+        set: value => {
+          if (style == "textAlign") {
+            value = TEXT_ALIGN_MAP[value] ? TEXT_ALIGN_MAP[value] : value;
+          }
+          const name = 'set' + CAPITALIZED_ATTRS_MAP[style];
+          wxCtx[name](value);
+        }
+      });
+    });
   }
 }

@@ -33,12 +33,12 @@ if (process.env.TARO_ENV === 'weapp') {
 import './f2-canvas.scss';
 
 interface F2CanvasPropTypes {
-  onInit: any,
+  onInit: (canvas: HTMLCanvasElement, width: number, height: number, F2: any) => {},
 }
 
 export default class F2Canvas extends Component<F2CanvasPropTypes> {
   static defaultProps = {
-    onInit: (canvas, width, height, F2) => {}
+    onInit: () => {}
   };
   static propTypes = {
     onInit: PropTypes.any,
@@ -56,7 +56,7 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
         this.canvas = canvas;
         const query = Taro.createSelectorQuery().in(this.$scope);
         query.select('.f2-canvas').boundingClientRect().exec(res => {
-          this.props.onInit(canvas, res[0].width, res[0].height, F2);
+          this.props.onInit(canvas as any, res[0].width, res[0].height, F2);
         });
       },1)
     }
