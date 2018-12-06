@@ -1,7 +1,7 @@
 import { ComponentClass } from 'react'
 
 export interface F2CanvasProps {
-  onInit: any,
+  onInit: (canvas:any, width: number, height: number, F2:any) => any,
 }
 
 declare const F2Canvas: ComponentClass<F2CanvasProps>

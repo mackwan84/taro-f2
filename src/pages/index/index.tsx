@@ -41,6 +41,7 @@ export default class Index extends Component {
 
   drawRadar(canvas, width, height, F2){
     console.log(canvas, width, height, F2)
+    
 
     const data = [
       { name: '超大盘能力', value: 6.5 },

@@ -33,7 +33,7 @@ if (process.env.TARO_ENV === 'weapp') {
 import './f2-canvas.scss';
 
 interface F2CanvasPropTypes {
-  onInit: (canvas: HTMLCanvasElement, width: number, height: number, F2: any) => {},
+  onInit: (canvas: any, width: number, height: number, F2: any) => {},
 }
 
 export default class F2Canvas extends Component<F2CanvasPropTypes> {
@@ -69,10 +69,6 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
   componentDidShow () { }
 
   componentDidHide () { }
-
-  testCanvas() {
-
-  }
 
   touchStart(e){
     if (this.canvas) {
