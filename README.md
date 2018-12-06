@@ -5,7 +5,7 @@
 
 目前支持 H5与小程序
 
-实现方法完全照搬: https://github.com/antvis/wx-f2
+微信部分实现方法完全照搬: https://github.com/antvis/wx-f2
 
 F2图表具体使用方法请参考: https://github.com/antvis/f2
 
