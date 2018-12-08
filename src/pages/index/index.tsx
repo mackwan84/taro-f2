@@ -27,7 +27,7 @@ export default class Index extends Component {
 
   componentWillMount () {
     this.setState({
-      dataList: new Array(3).fill(1).map(() => new Array(random(20, 40)).fill(1).map(() => random(0,20)))
+      dataList: new Array(3).fill(1).map(() => new Array(40).fill(1).map(() => random(0,20)))
     })
   }
 
@@ -41,8 +41,6 @@ export default class Index extends Component {
 
   drawRadar(canvas, width, height, F2){
     console.log(canvas, width, height, F2)
-    
-
     const data = [
       { name: '超大盘能力', value: 6.5 },
       { name: '抗跌能力', value: 9.5 },
@@ -125,15 +123,12 @@ export default class Index extends Component {
       tickCount: 3
     });
     chart.source(data);
-    chart.area().position('key*val').color('country').shape('smooth');
-    chart.line().position('key*val').color('country').shape('smooth');
+    chart.area().position('key*val').color('#999').shape('smooth');
+    chart.line().position('key*val').color('#999').shape('smooth');
     chart.render();
     setInterval(()=> {
-      data.push({key: data.length, val: random(0,20)})
-      chart.clear(); // 清理所有
+      data.push({key: data.length, val: random(0,20)});
       chart.source(data);
-      chart.area().position('key*val').color('country').shape('smooth');
-      chart.line().position('key*val').color('country').shape('smooth');
       chart.repaint()
     } ,1000)
     return chart;

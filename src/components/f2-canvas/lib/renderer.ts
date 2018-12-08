@@ -1,6 +1,6 @@
 import EventEmitter from 'wolfy87-eventemitter'
 
-const CAPITALIZED_ATTRS_MAP = {
+const CAPITALIZED_ATTRS_MAP_WX = {
   fontSize: 'FontSize',
   opacity: 'GlobalAlpha',
   lineDash: 'LineDash',
@@ -16,15 +16,33 @@ const TEXT_ALIGN_MAP = {
   'end': 'right',
 };
 
+var CAPITALIZED_ATTRS_MAP_ALI = {
+  fillStyle: 'FillStyle',
+  fontSize: 'FontSize',
+  globalAlpha: 'GlobalAlpha',
+  opacity: 'GlobalAlpha',
+  lineCap: 'LineCap',
+  lineJoin: 'LineJoin',
+  lineWidth: 'LineWidth',
+  miterLimit: 'MiterLimit',
+  strokeStyle: 'StrokeStyle',
+  textAlign: 'TextAlign',
+  textBaseline: 'TextBaseline'
+};
+
 export default class Renderer extends EventEmitter {
   
   ctx: CanvasRenderingContext2D
   style = {}; // just mock
-  constructor(wxCtx) {
+  TARO_ENV = '';
+  CAPITALIZED_ATTRS_MAP: any;
+
+  constructor(wxCtx, type:'weapp'|'alipay' = 'weapp') {
     super();
-    const self = this;
-    self.ctx = wxCtx;
-    self._initContext(wxCtx);
+    this.ctx = wxCtx;
+    this.CAPITALIZED_ATTRS_MAP = {weapp: CAPITALIZED_ATTRS_MAP_WX, alipay: CAPITALIZED_ATTRS_MAP_ALI}[type];
+    this.TARO_ENV = type;
+    this._initContext(wxCtx);
   }
 
   getContext(type) {
@@ -34,13 +52,15 @@ export default class Renderer extends EventEmitter {
   }
 
   _initContext(wxCtx) {
-    Object.keys(CAPITALIZED_ATTRS_MAP).map(style => {
+    Object.keys(this.CAPITALIZED_ATTRS_MAP).map(style => {
       Object.defineProperty(wxCtx, style, {
         set: value => {
-          if (style == "textAlign") {
-            value = TEXT_ALIGN_MAP[value] ? TEXT_ALIGN_MAP[value] : value;
+          if(this.TARO_ENV == 'weapp') {
+            if (style == "textAlign") {
+              value = TEXT_ALIGN_MAP[value] ? TEXT_ALIGN_MAP[value] : value;
+            }
           }
-          const name = 'set' + CAPITALIZED_ATTRS_MAP[style];
+          const name = 'set' + this.CAPITALIZED_ATTRS_MAP[style];
           wxCtx[name](value);
         }
       });

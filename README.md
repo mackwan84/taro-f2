@@ -3,11 +3,12 @@
 
 [![](https://img.shields.io/npm/v/taro-f2.svg?style=flat-square)](https://www.npmjs.com/package/taro-f2)
 
-目前支持 H5与小程序
+目前支持: H5、微信小程序、支付宝小程序
 
 微信部分实现方法完全照搬: https://github.com/antvis/wx-f2
 
 F2图表具体使用方法请参考: https://github.com/antvis/f2
+
 
 ## 安装
 
@@ -129,3 +130,9 @@ export default class Index extends Component {
 }
 ```
 
+
+
+
+##  更新日志
+
+1.1.0：增加支付宝小程序支持, 修复h5模糊的问题
