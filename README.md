@@ -20,6 +20,17 @@ $ npm install taro-f2
 $ yarn add taro-f2
 ```
 
+修改项目配置文件 config/index.js
+在 `h5` 的 `esnextModules` 中增加 `taro-f2`
+```
+{
+  h5: {
+    esnextModules: ['taro-f2']
+  }
+}
+```
+
+
 ## 使用指南
 
 在 Taro 文件中引入组件
@@ -134,6 +145,7 @@ export default class Index extends Component {
 
 
 ##  更新日志
-* 1.1.2: 改用低版本@tarojs/cli编译，新版本貌似该h5的编译方式了，混乱中。。。
+* 1.2.0: 使用新的打包方式，注意升级项目依赖库
+* 1.1.2: 改用低版本@tarojs/cli编译，新版本貌似改了h5的编译方式了
 * 1.1.0: 增加支付宝小程序支持, 修复h5模糊的问题
  
