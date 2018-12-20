@@ -5,9 +5,47 @@ import Renderer from './lib/renderer';
 import F2 from '@antv/f2';
 
 if (process.env.TARO_ENV !== 'h5') {
+
+
+  console.log('F2.Util', F2.Util);
+
+  function strLen(str) {
+    let len = 0;
+    for (let i = 0; i < str.length; i++) {
+      if (str.charCodeAt(i) > 0 && str.charCodeAt(i) < 128) {
+        len++;
+      } else {
+        len += 2;
+      }
+    }
+  
+    return len;
+  }
+  
+  // override some methods
+  F2.Util.measureText = function(text, font, ctx) {
+    if (!ctx) {
+      let fontSize = 12;
+      if (font) {
+        fontSize = parseInt(font.split(' ')[3], 10);
+      }
+      fontSize /= 2;
+      return {
+        width: strLen(text) * fontSize
+      };
+    }
+    ctx.font = font || '12px sans-serif';
+    return ctx.measureText(text);
+  };
+
   F2.Util.addEventListener = function (source, type, listener) {
     source.addListener(type, listener);
   };
+
+  F2.Util.getStyle = function (el, property) {
+    return el.currentStyle ? el.currentStyle[property] : undefined;
+  },
+
   F2.Util.removeEventListener = function (source, type, listener) {
     source.removeListener(type, listener);
   };

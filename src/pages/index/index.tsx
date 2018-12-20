@@ -125,6 +125,25 @@ export default class Index extends Component {
     chart.source(data);
     chart.area().position('key*val').color('#999').shape('smooth');
     chart.line().position('key*val').color('#999').shape('smooth');
+
+    chart.tooltip({
+      showXTip: true,
+      showYTip: true,
+      crosshairsType: 'xy',
+      xTip: (v) => 'x:'+Number(v).toFixed(2),
+      yTip: (v) => 'y:'+Number(v).toFixed(2),
+      xTipBackground: {
+        radius: 1,
+        fill: 'rgba(0, 0, 0, 0.65)',
+        padding: [ 3, 5 ]
+      },
+      yTipBackground: {
+        radius: 1,
+        fill: 'rgba(0, 0, 0, 0.65)',
+        padding: [ 3, 5 ]
+      }
+    })
+
     chart.render();
     setInterval(()=> {
       data.push({key: data.length, val: random(0,20)});
