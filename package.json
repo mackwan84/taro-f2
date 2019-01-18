@@ -88,7 +88,6 @@
 		"typescript": "^3.0.1"
 	},
 	"dependencies": {
-		"@antv/wx-f2": "^1.1.4",
 		"wolfy87-eventemitter": "^5.2.5"
 	}
 }
