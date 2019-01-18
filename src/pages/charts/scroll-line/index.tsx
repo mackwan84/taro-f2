@@ -10,8 +10,6 @@ const ScrollBar = require('@antv/f2/lib/plugin/scroll-bar');
 const Tooltip = require('@antv/f2/lib/plugin/tooltip');
 F2.Chart.plugins.register([ScrollBar, Tooltip]);
 
-
-
 export default class Index extends Component {
   config: Config = {
     navigationBarTitleText: '线图平移交互(长按展示 tooltip)',
@@ -20,7 +18,10 @@ export default class Index extends Component {
 
   state = { };
 
-  initChart(canvas, width, height, F2) {
+  initChart(canvas, width, height, F22) {
+    console.log('F22', F22);
+    console.log('F2', F2);
+
     const chart = new F2.Chart({
       el: canvas,
       width,
@@ -80,8 +81,9 @@ export default class Index extends Component {
   }
 
   render () {
+    console.log('FFFF', F2);
     return (
-      <View className='full-screen'><F2Canvas F2={F2} onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
+      <View className='full-screen'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
     )
   }
 }

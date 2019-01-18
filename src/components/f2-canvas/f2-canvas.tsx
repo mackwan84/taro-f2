@@ -4,8 +4,13 @@ import PropTypes from 'prop-types';
 import Renderer from './lib/renderer';
 import './f2-canvas.css';
 
+
+interface F2CanvasPropTypes {
+  onCanvasInit: (canvas: any, width: number, height: number) => any,
+}
+
 function f2Fix(F2) {
-  if( ( !F2 ) || F2.TaroFixed){return}
+  if( ( !F2 ) || F2.TaroFixed){return F2}
   if (process.env.TARO_ENV !== 'h5') {
     function strLen(str) {
       let len = 0;
@@ -69,12 +74,9 @@ function f2Fix(F2) {
     F2.Global.pixelRatio = window.devicePixelRatio
   }
   F2.TaroFixed = true;
+  return F2
 }
 
-interface F2CanvasPropTypes {
-  onCanvasInit: (canvas: any, width: number, height: number, F2: any) => {},
-  F2?: any,
-}
 function randomStr (long: number): string {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   const maxPos = chars.length;
@@ -88,8 +90,9 @@ function randomStr (long: number): string {
 export default class F2Canvas extends Component<F2CanvasPropTypes> {
   static defaultProps = {
     onCanvasInit: () => {},
-    F2: {},
+    FixF2: {},
   };
+  static fixF2 = f2Fix;
   static propTypes = {
     onCanvasInit: PropTypes.any,
     F2: PropTypes.any
@@ -105,7 +108,6 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
   F2: any;
 
   componentWillMount () {
-    f2Fix(this.props.F2);
     if (process.env.TARO_ENV !== 'h5' ) {
       setTimeout(()=>{
         const query = Taro.createSelectorQuery().in(this.$scope);
@@ -115,7 +117,7 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
           const canvasHeight = res[0].height;
           const canvas = new Renderer(ctx, process.env.TARO_ENV);
           this.canvas = canvas;
-          this.props.onCanvasInit(canvas, canvasWidth, canvasHeight, this.props.F2);
+          this.props.onCanvasInit(canvas, canvasWidth, canvasHeight);
         });
       },1)
     }
@@ -153,7 +155,7 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
   htmlCanvas(canvas){
     setTimeout(() => {
       this.canvas = canvas;
-      this.props.onCanvasInit(canvas, canvas.offsetWidth, canvas.offsetHeight, this.props.F2)
+      this.props.onCanvasInit(canvas, canvas.offsetWidth, canvas.offsetHeight)
     }, 1)
   }
 
