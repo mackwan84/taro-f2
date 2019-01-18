@@ -51,9 +51,9 @@ f2Fix(F2)
 ```
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-+ import { F2Canvas, f2Fix } from 'taro-f2'
-+ import F2 from "@antv/f2"
-+ f2Fix(F2)
+import { F2Canvas, f2Fix } from 'taro-f2'
+import F2 from "@antv/f2"
+f2Fix(F2)
 
 export default class Index extends Component {
 
