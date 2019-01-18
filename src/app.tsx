@@ -14,7 +14,28 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/charts/scroll-line/index',
+      'pages/charts/radial-bar/index',
+      'pages/charts/line/index',
+      'pages/charts/area/index',
+      'pages/charts/column/index',
+      'pages/charts/bar/index',
+      'pages/charts/dodge/index',
+      'pages/charts/stackBar/index',
+      'pages/charts/ring/index',
+      'pages/charts/pie/index',
+      'pages/charts/rose/index',
+      'pages/charts/radar/index',
+      'pages/charts/gauge/index',
+      'pages/charts/double-axis/index',
+      'pages/charts/k/index',
+      'pages/charts/stack-area/index',
+      'pages/charts/multiCharts/index',
+      'pages/charts/steps-pan/index',
+      'pages/charts/pie-select/index',
+      'pages/charts/column-select/index',
+      'pages/charts/gradient-column/index',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -23,6 +44,11 @@ class App extends Component {
       navigationBarTextStyle: 'black'
     }
   }
+
+  componentWillMount () {
+
+  }
+
 
   componentDidMount () {}
 

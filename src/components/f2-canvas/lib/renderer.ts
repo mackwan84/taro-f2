@@ -37,7 +37,7 @@ export default class Renderer extends EventEmitter {
   TARO_ENV = '';
   CAPITALIZED_ATTRS_MAP: any;
 
-  constructor(wxCtx, type:'weapp'|'alipay' = 'weapp') {
+  constructor(wxCtx, type: string = 'weapp') {
     super();
     this.ctx = wxCtx;
     this.CAPITALIZED_ATTRS_MAP = {weapp: CAPITALIZED_ATTRS_MAP_WX, alipay: CAPITALIZED_ATTRS_MAP_ALI}[type];

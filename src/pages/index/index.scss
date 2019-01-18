@@ -1,0 +1,43 @@
+.others{
+  border-top: 1px #ddd solid;
+  .item {
+    font-size: 40px;
+    line-height: 1;
+    padding: 30px 50px ;
+    background: #fff;
+    &.hover {
+      background: #ddd;
+    }
+    & + .item {
+      border-top: 1px #ddd solid;
+    }
+  }
+}
+.charts {
+  border-top: 1px #ddd solid;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 50px;
+  .item{
+    width: 25%;
+    fill: none;
+    text-align: center;
+    margin-bottom: 20px;
+    .image {
+      width: 70px;
+      height: 70px;
+      box-sizing: content-box;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .text {
+      text-align: center;
+      font-size: 30px;
+      padding: 0 20px;
+    }
+  }
+  &.hover {
+    background: #ddd;
+  }
+}

@@ -1,8 +1,6 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import './index.scss'
-import F2Canvas from '../../components/f2-canvas/f2-canvas';
-const random = (min,max) => Math.floor(Math.random() * (max - min + 1) + min);
+import Taro, { Component, Config } from '@tarojs/taro';
+import { View, Text, Image } from '@tarojs/components';
+import './index.scss';
 
 export default class Index extends Component {
 
@@ -17,18 +15,39 @@ export default class Index extends Component {
     navigationBarTitleText: '首页'
   }
 
-  state = {
-    dataList: [
- 
+  state: {
+    charts: {name: string, value: string}[],
+    others: {name: string, value: string}[]
+  } = {
+    charts: [
+      { name: 'radial-bar', value: 'iwatch健康记录' }, // ok
+      { name: 'line', value: '折线图' }, // ok
+      { name: 'area', value: '区域图' }, // ok
+      { name: 'column', value: '柱状图' }, // ok
+      { name: 'bar', value: '条形图' }, // ok
+      { name: 'dodge', value: '分组柱状图' }, // ok
+      { name: 'stackBar', value: '层叠条形图' }, // ok
+      { name: 'ring', value: '环图' }, // ok
+      { name: 'pie', value: '饼图' }, // ok
+      { name: 'rose', value: '玫瑰图' }, // ok
+      { name: 'radar', value: '雷达图' }, // ok
+      { name: 'gauge', value: '仪表盘' }, // ok
+      { name: 'double-axis', value: '双 Y 轴' }, // ok
+      { name: 'k', value: 'K 线图(异步获取数据)' }, // ok
+      { name: 'stack-area', value: '层叠区域图' }, // ok
+      { name: 'multiCharts', value: '多图表好性能' } // ok
+    ],
+    others: [
+      { name: 'scroll-line', value: '线图平移交互(长按展示 tooltip)' }, // ok 长按真机貌似有问题 虚拟机可以 ???
+      { name: 'steps-pan', value: '每日步数（柱状图平移）' }, // ok
+      { name: 'pie-select', value: '饼图选中交互' }, // ok
+      { name: 'column-select', value: '柱状图选中交互(可取消选中)' }, // ok
+      { name: 'gradient-column', value: '渐变色柱状图' } // ok
     ]
-    
-
-  }
+  };
 
   componentWillMount () {
-    this.setState({
-      dataList: new Array(3).fill(1).map(() => new Array(40).fill(1).map(() => random(0,20)))
-    })
+
   }
 
   componentDidMount () { }
@@ -39,130 +58,33 @@ export default class Index extends Component {
 
   componentDidHide () { }
 
-  drawRadar(canvas, width, height, F2){
-    console.log(canvas, width, height, F2)
-    const data = [
-      { name: '超大盘能力', value: 6.5 },
-      { name: '抗跌能力', value: 9.5 },
-      { name: '稳定能力', value: 9 },
-      { name: '绝对收益能力', value: 6 },
-      { name: '选证择时能力', value: 6 },
-      { name: '风险回报能力', value: 8 }
-    ];
-    const chart = new F2.Chart({
-      el: canvas,
-      width,
-      height
+  gotoPage (page) {
+    Taro.navigateTo({
+      url: '/pages/charts/' + page + '/index'
     });
-    chart.source(data, {
-      value: {
-        min: 0,
-        max: 10
-      }
-    });
-    chart.coord('polar');
-    chart.axis('value', {
-      grid: {
-        lineDash: null
-      },
-      label: null,
-      line: null
-    });
-    chart.axis('name', {
-      grid: {
-        lineDash: null
-      }
-    });
-    chart.area()
-      .position('name*value')
-      .color('#FE5C5B')
-      .style({
-        fillOpacity: 0.2
-      })
-      .animate({
-        appear: {
-          animation: 'groupWaveIn'
-        }
-      });
-    chart.line()
-      .position('name*value')
-      .color('#FE5C5B')
-      .size(1)
-      .animate({
-        appear: {
-          animation: 'groupWaveIn'
-        }
-      });
-    chart.point().position('name*value').color('#FE5C5B').animate({
-      appear: {
-        delay: 300
-      }
-    });
-    chart.guide().text({
-      position: ['50%', '50%'],
-      content: '73',
-      style: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        fill: '#FE5C5B'
-      }
-    });
-    chart.render();
-  }
-  drawArea(areaData, canvas, width, height, F2){
-    const data: any[] = areaData.map((v, i) => ({
-      key: i,
-      val: v,
-    }))
-    const chart = new F2.Chart({
-      el: canvas,
-      width,
-      height
-    });
-    chart.scale('val', {
-      tickCount: 3
-    });
-    chart.source(data);
-    chart.area().position('key*val').color('#999').shape('smooth');
-    chart.line().position('key*val').color('#999').shape('smooth');
-
-    chart.tooltip({
-      showXTip: true,
-      showYTip: true,
-      crosshairsType: 'xy',
-      xTip: (v) => 'x:'+Number(v).toFixed(2),
-      yTip: (v) => 'y:'+Number(v).toFixed(2),
-      xTipBackground: {
-        radius: 1,
-        fill: 'rgba(0, 0, 0, 0.65)',
-        padding: [ 3, 5 ]
-      },
-      yTipBackground: {
-        radius: 1,
-        fill: 'rgba(0, 0, 0, 0.65)',
-        padding: [ 3, 5 ]
-      }
-    })
-
-    chart.render();
-    setInterval(()=> {
-      data.push({key: data.length, val: random(0,20)});
-      chart.source(data);
-      chart.repaint()
-    } ,1000)
-    return chart;
   }
 
   render () {
+
     return (
       <View className='index'>
-        <Text>Hello world!</Text>
-        <View style='width:100%;height:500px'><F2Canvas onInit={this.drawRadar.bind(this)}></F2Canvas></View>
-        {
-          this.state.dataList.map(data => (
-            <View style='width:100%;height:100px'><F2Canvas onInit={this.drawArea.bind(this, data)}></F2Canvas></View>
-          ))
-        }
+        <View className='others'>
+          {
+            this.state.others.map(v => <View key={v.name} className='item' hoverClass='hover' onClick={this.gotoPage.bind(this, v.name)}>
+              <Text>{ v.value }</Text>
+            </View>)
+          }
+        </View>
+
+        <View className='charts'>
+          {
+            this.state.charts.map(v => <View key={v.name} className='item' hoverClass='hover' onClick={this.gotoPage.bind(this, v.name)}>
+              <Image className='image' mode="aspectFit" src={'https://github.com/antvis/wx-f2/blob/master/img/' + v.name + '.png?raw=true'}/>
+              <View className='text'>{ v.value }</View>
+            </View>)
+          }
+        </View>
+
       </View>
     )
   }

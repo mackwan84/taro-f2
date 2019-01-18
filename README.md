@@ -1,4 +1,3 @@
-
 # Taro多端F2图表
 
 [![](https://img.shields.io/npm/v/taro-f2.svg?style=flat-square)](https://www.npmjs.com/package/taro-f2)
@@ -9,18 +8,16 @@
 
 F2图表具体使用方法请参考: https://github.com/antvis/f2
 
+> 直接克隆代码 可直接查阅示例
 
 ## 安装
 
 ```
-$ npm install taro-f2
+$ yarn add taro-f2 @antv/f2
 ```
-或者
-```
-$ yarn add taro-f2
-```
+> 注意 @antv/f2 需要手动安装
 
-修改项目配置文件 config/index.js
+#### 修改项目配置文件 config/index.js
 在 `h5` 的 `esnextModules` 中增加 `taro-f2`
 ```
 {
@@ -35,18 +32,18 @@ $ yarn add taro-f2
 
 在 Taro 文件中引入组件
 ```
-import { F2Canvas } from 'taro-f2'
+import { F2Canvas, f2Fix } from 'taro-f2'
+import F2 from "@antv/f2"
+f2Fix(F2)
 ```
 
 > F2Canvas宽高为100% 设置宽高需要在外面套个View
-
 
 ## 事件
 
 | 事件名称 | 说明 | 返回参数 |
 |:---|:---|:---|
-| onInit | 画板初始化完毕事件 | (canvas: any, width: number, height: number, F2: any): void <br> canvas: 小程序下为伪Canvas元素 |
-
+| onCanvasInit | 画板初始化完毕事件 | (canvas: any, width: number, height: number): void <br> canvas: 小程序下为伪Canvas元素 |
 
 
 ## 示例
@@ -54,13 +51,15 @@ import { F2Canvas } from 'taro-f2'
 ```
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { F2Canvas } from 'taro-f2'
++ import { F2Canvas, f2Fix } from 'taro-f2'
++ import F2 from "@antv/f2"
++ f2Fix(F2)
 
 export default class Index extends Component {
 
-  drawRadar(canvas, width, height, F2){
+  drawRadar(canvas, width, height){
 
-    console.log(canvas, width, height, F2)
+    console.log(canvas, width, height)
 
     const data = [
       { name: '超大盘能力', value: 6.5 },
@@ -134,7 +133,7 @@ export default class Index extends Component {
   render () {
     return (
       <View className='index'>
-        <View style='width:100%;height:500px'><F2Canvas onInit={this.drawRadar.bind(this)}></F2Canvas></View>
+        <View style='width:100%;height:500px'><F2Canvas onCanvasInit={this.drawRadar.bind(this)}></F2Canvas></View>
       </View>
     )
   }
@@ -145,7 +144,11 @@ export default class Index extends Component {
 
 
 ##  更新日志
-* 1.2.0: 使用新的打包方式，注意升级Taro库到 1.2.0-beta.11 或更高版本
+* 2.0.0: 支持了按需引用
+  - `onInit` 修改为 `onCanvasInit`,回调不再返回F2
+  - 增加 `f2Fix` 方法, 用于为F2增加小程序等兼容代码
+  - 增加示例代码
+* 1.2.0: 使用新的打包方式，注意升级Taro库到 1.2.0 或更高版本
 * 1.1.2: 改用低版本@tarojs/cli编译，新版本貌似改了h5的编译方式了
 * 1.1.0: 增加支付宝小程序支持, 修复h5模糊的问题
  
