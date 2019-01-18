@@ -26,6 +26,9 @@ const config = {
   },
   defineConstants: {
   },
+  alias: {
+    'taro-f2': path.resolve(__dirname, '../src/index.ts'),
+  },
   copy: {
      patterns: [
     ],
