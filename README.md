@@ -1,5 +1,7 @@
 # Taro多端F2图表
 
+# ⚠️  2.0.* 暂不可用 请不要更新
+
 [![](https://img.shields.io/npm/v/taro-f2.svg?style=flat-square)](https://www.npmjs.com/package/taro-f2)
 
 目前支持: H5、微信小程序、支付宝小程序

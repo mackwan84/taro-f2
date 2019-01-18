@@ -73,6 +73,7 @@ export function f2Fix(F2) {
 
 interface F2CanvasPropTypes {
   onCanvasInit: (canvas: any, width: number, height: number) => {},
+  F2?: any,
 }
 function randomStr (long: number): string {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -87,9 +88,11 @@ function randomStr (long: number): string {
 export default class F2Canvas extends Component<F2CanvasPropTypes> {
   static defaultProps = {
     onCanvasInit: () => {},
+    F2: {},
   };
   static propTypes = {
     onCanvasInit: PropTypes.any,
+    F2: PropTypes.any
   };
 
   state = {
@@ -102,6 +105,7 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
   F2: any;
 
   componentWillMount () {
+    f2Fix(this.props.F2);
     if (process.env.TARO_ENV !== 'h5' ) {
       setTimeout(()=>{
         const query = Taro.createSelectorQuery().in(this.$scope);
