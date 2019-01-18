@@ -48,7 +48,7 @@ f2Fix(F2)
 
 ## 示例
 
-```
+```jsx harmony
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { F2Canvas, f2Fix } from 'taro-f2'
