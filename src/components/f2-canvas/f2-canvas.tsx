@@ -2,9 +2,10 @@ import Taro, { Component } from '@tarojs/taro'
 import {Canvas} from '@tarojs/components'
 import PropTypes from 'prop-types';
 import Renderer from './lib/renderer';
+import './f2-canvas.css';
 
 export function f2Fix(F2) {
-  if(F2.TaroFixed || !F2){return}
+  if( ( !F2 ) || F2.TaroFixed){return}
   if (process.env.TARO_ENV !== 'h5') {
     function strLen(str) {
       let len = 0;
@@ -70,7 +71,6 @@ export function f2Fix(F2) {
   F2.TaroFixed = true;
 }
 
-import './f2-canvas.css';
 interface F2CanvasPropTypes {
   onCanvasInit: (canvas: any, width: number, height: number) => {},
 }
