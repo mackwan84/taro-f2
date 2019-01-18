@@ -1,13 +1,12 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas, {f2Fix} from "../../../components/f2-canvas/f2-canvas";
+import F2Canvas from "../../../components/f2-canvas/f2-canvas";
 import data from '../../../data/steps-pan.js'
 import {View} from '@tarojs/components';
 
 /* 引入F2 */
 const F2 = require("@antv/f2");
 
-/* 补丁 */
-f2Fix(F2);
+
 
 
 function formatNumber(n) {
@@ -23,7 +22,7 @@ export default class Index extends Component {
 
   state = { };
 
-  initChart (canvas, width, height) {
+  initChart (canvas, width, height, F2) {
     const originDates = [];
     data.forEach(obj => {
       if (obj.date >= '2018-05-01') {
@@ -106,7 +105,7 @@ export default class Index extends Component {
 
   render () {
     return (
-      <View className='full-screen'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
+      <View className='full-screen'><F2Canvas F2={F2} onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
     )
   }
 }

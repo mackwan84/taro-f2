@@ -1,12 +1,11 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas, {f2Fix} from "../../../components/f2-canvas/f2-canvas";
+import F2Canvas from "../../../components/f2-canvas/f2-canvas";
 import {View} from '@tarojs/components';
 
 /* 引入F2 */
 const F2 = require("@antv/f2");
 
-/* 补丁 */
-f2Fix(F2);
+
 
 export default class Index extends Component {
   config: Config = {
@@ -229,13 +228,13 @@ export default class Index extends Component {
     return (
       <View className='full-screen'>
         <View style='width: 100%;height: 33%;'>
-          <F2Canvas onCanvasInit={this.drawBar.bind(this)}></F2Canvas>
+          <F2Canvas F2={F2} onCanvasInit={this.drawBar.bind(this)}></F2Canvas>
         </View>
         <View style='width: 100%;height: 33%;'>
-          <F2Canvas onCanvasInit={this.drawScatter.bind(this)}></F2Canvas>
+          <F2Canvas F2={F2} onCanvasInit={this.drawScatter.bind(this)}></F2Canvas>
         </View>
         <View style='width: 100%;height: 33%;'>
-          <F2Canvas onCanvasInit={this.drawRadial.bind(this)}></F2Canvas>
+          <F2Canvas F2={F2} onCanvasInit={this.drawRadial.bind(this)}></F2Canvas>
         </View>
       </View>
     )

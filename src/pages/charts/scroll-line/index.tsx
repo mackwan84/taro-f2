@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro';
 import data from '../../../data/sroll-line.js'
-import F2Canvas, {f2Fix} from "../../../components/f2-canvas/f2-canvas";
+import F2Canvas from "../../../components/f2-canvas/f2-canvas";
 import {View} from '@tarojs/components';
 
 /* 引入F2 */
@@ -10,8 +10,7 @@ const ScrollBar = require('@antv/f2/lib/plugin/scroll-bar');
 const Tooltip = require('@antv/f2/lib/plugin/tooltip');
 F2.Chart.plugins.register([ScrollBar, Tooltip]);
 
-/* 补丁 */
-f2Fix(F2);
+
 
 export default class Index extends Component {
   config: Config = {
@@ -21,7 +20,7 @@ export default class Index extends Component {
 
   state = { };
 
-  initChart(canvas, width, height) {
+  initChart(canvas, width, height, F2) {
     const chart = new F2.Chart({
       el: canvas,
       width,
@@ -82,7 +81,7 @@ export default class Index extends Component {
 
   render () {
     return (
-      <View className='full-screen'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
+      <View className='full-screen'><F2Canvas F2={F2} onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
     )
   }
 }

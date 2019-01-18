@@ -146,7 +146,7 @@ export default class Index extends Component {
   render () {
     return (
       <View className='index'>
-        <View style='width:100%;height:500px'><F2Canvas onCanvasInit={this.drawRadar.bind(this)}></F2Canvas></View>
+        <View style='width:100%;height:500px'><F2Canvas F2={F2} onCanvasInit={this.drawRadar.bind(this)}></F2Canvas></View>
       </View>
     )
   }

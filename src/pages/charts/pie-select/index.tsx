@@ -1,12 +1,11 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas, {f2Fix} from "../../../components/f2-canvas/f2-canvas";
+import F2Canvas from "../../../components/f2-canvas/f2-canvas";
 import {View, Text} from '@tarojs/components';
 
 /* 引入F2 */
 const F2 = require("@antv/f2");
 
-/* 补丁 */
-f2Fix(F2);
+
 
 export default class Index extends Component {
   config: Config = {
@@ -18,7 +17,7 @@ export default class Index extends Component {
     message: '',
   };
 
-  initChart (canvas, width, height) {
+  initChart (canvas, width, height, F2) {
     var data = [
       { name: '芳华', percent: 0.4, a: '1' },
       { name: '妖猫传', percent: 0.2, a: '1' },

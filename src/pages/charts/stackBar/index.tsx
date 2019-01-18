@@ -1,12 +1,11 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas, {f2Fix} from "../../../components/f2-canvas/f2-canvas";
+import F2Canvas from "../../../components/f2-canvas/f2-canvas";
 import {View} from '@tarojs/components';
 
 /* 引入F2 */
 const F2 = require("@antv/f2");
 
-/* 补丁 */
-f2Fix(F2);
+
 
 export default class Index extends Component {
   config: Config = {
@@ -16,7 +15,7 @@ export default class Index extends Component {
 
   state = { };
 
-  initChart (canvas, width, height) {
+  initChart (canvas, width, height, F2) {
     const data = [
       { State: 'WY', 年龄段: '小于5岁', 人口数量: 25635 },
       { State: 'WY', 年龄段: '5至13岁', 人口数量: 1890 },
@@ -99,7 +98,7 @@ export default class Index extends Component {
 
   render () {
     return (
-      <View className='full-screen'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
+      <View className='full-screen'><F2Canvas F2={F2} onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
     )
   }
 }

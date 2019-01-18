@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Renderer from './lib/renderer';
 import './f2-canvas.css';
 
-export function f2Fix(F2) {
+function f2Fix(F2) {
   if( ( !F2 ) || F2.TaroFixed){return}
   if (process.env.TARO_ENV !== 'h5') {
     function strLen(str) {
@@ -72,7 +72,7 @@ export function f2Fix(F2) {
 }
 
 interface F2CanvasPropTypes {
-  onCanvasInit: (canvas: any, width: number, height: number) => {},
+  onCanvasInit: (canvas: any, width: number, height: number, F2: any) => {},
   F2?: any,
 }
 function randomStr (long: number): string {
@@ -115,7 +115,7 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
           const canvasHeight = res[0].height;
           const canvas = new Renderer(ctx, process.env.TARO_ENV);
           this.canvas = canvas;
-          this.props.onCanvasInit(canvas, canvasWidth, canvasHeight);
+          this.props.onCanvasInit(canvas, canvasWidth, canvasHeight, this.props.F2);
         });
       },1)
     }
@@ -153,7 +153,7 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
   htmlCanvas(canvas){
     setTimeout(() => {
       this.canvas = canvas;
-      this.props.onCanvasInit(canvas, canvas.offsetWidth, canvas.offsetHeight)
+      this.props.onCanvasInit(canvas, canvas.offsetWidth, canvas.offsetHeight, this.props.F2)
     }, 1)
   }
 
