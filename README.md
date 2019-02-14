@@ -1,6 +1,6 @@
 # Taro多端F2图表
 
-# ⚠️  2.0.* 暂不可用 请不要更新
+# ⚠️  2.0.* 暂不可用 请不要更新 [前往NPM查看可用版本](https://www.npmjs.com/package/taro-f2)
 
 [![](https://img.shields.io/npm/v/taro-f2.svg?style=flat-square)](https://www.npmjs.com/package/taro-f2)
 
