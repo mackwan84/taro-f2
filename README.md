@@ -1,7 +1,5 @@
 # Taro多端F2图表
 
-# ⚠️  2.0.* 暂不可用 请不要更新
-
 [![](https://img.shields.io/npm/v/taro-f2.svg?style=flat-square)](https://www.npmjs.com/package/taro-f2)
 
 目前支持: H5、微信小程序、支付宝小程序
@@ -13,14 +11,13 @@ F2图表具体使用方法请参考: https://github.com/antvis/f2
 > 直接克隆代码 可查阅示例
 
 ##  更新日志
-* 2.0.0: 支持了按需引用
+* 2.1.0: 支持了按需引用
   - `onInit` 修改为 `onCanvasInit`,回调不再返回F2
-  - 增加 `f2Fix` 方法, 用于为F2增加小程序等兼容代码
+  - 增加 `F2Canvas.f2Fix()` 方法, 用于为F2增加小程序等兼容代码
   - 增加示例代码
 * 1.2.0: 使用新的打包方式，注意升级Taro库到 1.2.0 或更高版本
 * 1.1.2: 改用低版本@tarojs/cli编译，新版本貌似改了h5的编译方式了
 * 1.1.0: 增加支付宝小程序支持, 修复h5模糊的问题
- 
 
 
 ## 安装
@@ -45,9 +42,8 @@ $ yarn add taro-f2 @antv/f2
 
 在 Taro 文件中引入组件
 ```
-import { F2Canvas, f2Fix } from 'taro-f2'
+import { F2Canvas } from "taro-f2";
 import F2 from "@antv/f2"
-f2Fix(F2)
 ```
 
 > F2Canvas宽高为100% 设置宽高需要在外面套个View
@@ -64,15 +60,14 @@ f2Fix(F2)
 ```jsx harmony
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { F2Canvas, f2Fix } from 'taro-f2'
+import { F2Canvas } from 'taro-f2'
 import F2 from "@antv/f2"
-f2Fix(F2)
 
 export default class Index extends Component {
 
   drawRadar(canvas, width, height){
-
-    console.log(canvas, width, height)
+    F2Canvas.fixF2(F2);
+    console.log(canvas, width, height);
 
     const data = [
       { name: '超大盘能力', value: 6.5 },
@@ -146,7 +141,7 @@ export default class Index extends Component {
   render () {
     return (
       <View className='index'>
-        <View style='width:100%;height:500px'><F2Canvas F2={F2} onCanvasInit={this.drawRadar.bind(this)}></F2Canvas></View>
+        <View style='width:100%;height:500px'><F2Canvas onCanvasInit={this.drawRadar.bind(this)}></F2Canvas></View>
       </View>
     )
   }

@@ -1,13 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro';
+import {View} from '@tarojs/components';
 import data from '../../../data/sroll-line.js'
 import F2Canvas from "../../../components/f2-canvas/f2-canvas";
-import {View} from '@tarojs/components';
-import {fixF2} from "../../../common/f2-tool";
 
-/* 引入F2 */
 const F2 = require("@antv/f2");
-
-fixF2(F2);
 
 require('@antv/f2/lib/interaction/');
 const ScrollBar = require('@antv/f2/lib/plugin/scroll-bar');
@@ -22,10 +18,8 @@ export default class Index extends Component {
 
   state = { };
 
-  initChart(canvas, width, height, F22) {
-    console.log('F22', F22);
-    console.log('F2', F2);
-
+  initChart(canvas, width, height) {
+    F2Canvas.fixF2(F2);
     const chart = new F2.Chart({
       el: canvas,
       width,
