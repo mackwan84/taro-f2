@@ -139,10 +139,10 @@ F2Canvas.fixF2 = function (F2: any): any {
     };
     F2.Util.getStyle = function (el, property) {
       return el.currentStyle ? el.currentStyle[property] : undefined;
-    },
-      F2.Util.removeEventListener = function (source, type, listener) {
-        source.removeListener(type, listener);
-      };
+    };
+    F2.Util.removeEventListener = function (source, type, listener) {
+      source.removeListener(type, listener);
+    };
     F2.Util.createEvent = function (event, chart) {
       const type = event.type;
       let x = 0;

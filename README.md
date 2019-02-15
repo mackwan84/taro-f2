@@ -41,12 +41,22 @@ $ yarn add taro-f2 @antv/f2
 ## 使用指南
 
 在 Taro 文件中引入组件
-```
+```jsx harmony
 import { F2Canvas } from "taro-f2";
 import F2 from "@antv/f2"
 ```
 
-> F2Canvas宽高为100% 设置宽高需要在外面套个View
+
+## 按需引用
+假如一个业务场景下仅需要绘制饼图（不带动画）
+```jsx harmony
+import { F2Canvas } from "taro-f2";
+const F2 = require('@antv/f2/lib/core'); // 必须引入
+require('@antv/f2/lib/geom/interval'); // 引入 interval 几何标记
+require('@antv/f2/lib/coord/polar'); // 引入 极坐标
+require('@antv/f2/lib/geom/adjust/stack'); // 引入数据层叠调整类型
+```
+
 
 ## 事件
 
@@ -55,19 +65,23 @@ import F2 from "@antv/f2"
 | onCanvasInit | 画板初始化完毕事件 | (canvas: any, width: number, height: number): void <br> canvas: 小程序下为伪Canvas元素 |
 
 
+> F2Canvas宽高为100% 设置宽高需要在外面套个View
+
 ## 示例
 
 ```jsx harmony
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { F2Canvas } from 'taro-f2'
-import F2 from "@antv/f2"
+import F2 from '@antv/f2'
 
 export default class Index extends Component {
 
   drawRadar(canvas, width, height){
+    
+    // ⚠️ 别忘了这行
+    // 为了兼容微信与支付宝的小程序，你需要通过这个命令为F2打补丁
     F2Canvas.fixF2(F2);
-    console.log(canvas, width, height);
 
     const data = [
       { name: '超大盘能力', value: 6.5 },
