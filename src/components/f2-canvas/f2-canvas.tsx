@@ -82,6 +82,7 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
   }
 
   htmlCanvas(canvas){
+    if(!canvas) return;
     setTimeout(() => {
       this.canvas = canvas;
       this.props.onCanvasInit(canvas, canvas.offsetWidth, canvas.offsetHeight)
