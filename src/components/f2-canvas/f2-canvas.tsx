@@ -92,7 +92,7 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
   render () {
     const id = this.id;
     if (process.env.TARO_ENV === 'h5') {
-      return <canvas  ref={this.htmlCanvas.bind(this)} className={'f2-canvas ' + id}></canvas>
+      return <canvas  ref={this.htmlCanvas.bind(this)} style={{ width: this.state.width, height: this.state.height }} className={'f2-canvas ' + id}></canvas>
     }
     if (process.env.TARO_ENV !== 'h5') {
       return <Canvas style={'width: '+this.state.width+'; height:'+this.state.height}
