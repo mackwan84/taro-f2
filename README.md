@@ -11,7 +11,7 @@ F2图表具体使用方法请参考: https://github.com/antvis/f2
 > 直接克隆代码 可查阅示例
 
 ##  更新日志
-* 2.1.2: `onCanvasInit` 增加scope导出, 增加导出图片示例, 如果h5编译报错可以尝试将`@tarojs/webpack-runner`降级到 1.2.x #18
+* 2.1.2: `onCanvasInit` 增加scope导出, 增加导出图片示例, 如果h5编译报错可以尝试将`@tarojs/webpack-runner`降级到 1.2.x。具体参见:[#18](https://github.com/xioxin/taro-f2/issues/18)
 * 2.1.0: 支持了按需引用
   - `onInit` 修改为 `onCanvasInit`,回调不再返回F2
   - 增加 `F2Canvas.f2Fix()` 方法, 用于为F2增加小程序等兼容代码
