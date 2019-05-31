@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import Renderer from './lib/renderer';
 import './f2-canvas.css';
 
-
 interface F2CanvasPropTypes {
-  onCanvasInit: (canvas: any, width: number, height: number) => any,
+  onCanvasInit: (canvas: any, width: number, height: number, $scope: any) => any,
 }
 
 function randomStr (long: number): string {
@@ -41,12 +40,12 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
       setTimeout(()=>{
         const query = Taro.createSelectorQuery().in(this.$scope);
         query.select('#'+this.id).boundingClientRect().exec(res => {
-          const ctx = Taro.createCanvasContext(process.env.TARO_ENV === 'weapp' ? 'f2-canvas' : this.id, this.$scope);
+          const ctx = Taro.createCanvasContext(this.id, this.$scope);
           const canvasWidth = res[0].width;
           const canvasHeight = res[0].height;
           const canvas = new Renderer(ctx, process.env.TARO_ENV);
           this.canvas = canvas;
-          this.props.onCanvasInit(canvas, canvasWidth, canvasHeight);
+          this.props.onCanvasInit(canvas, canvasWidth, canvasHeight, this.$scope);
         });
       },1)
     }
@@ -85,18 +84,18 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
     if(!canvas) return;
     setTimeout(() => {
       this.canvas = canvas;
-      this.props.onCanvasInit(canvas, canvas.offsetWidth, canvas.offsetHeight)
+      this.props.onCanvasInit(canvas, canvas.offsetWidth, canvas.offsetHeight, this.$scope)
     }, 1)
   }
 
   render () {
     const id = this.id;
     if (process.env.TARO_ENV === 'h5') {
-      return <canvas  ref={this.htmlCanvas.bind(this)} style={{ width: this.state.width, height: this.state.height }} className={'f2-canvas ' + id}></canvas>
+      return <canvas ref={this.htmlCanvas.bind(this)} style={{ width: this.state.width, height: this.state.height }} className={'f2-canvas ' + id}></canvas>
     }
     if (process.env.TARO_ENV !== 'h5') {
       return <Canvas style={'width: '+this.state.width+'; height:'+this.state.height}
-        className='f2-canvas' canvasId='f2-canvas'
+        className='f2-canvas' canvasId={id}
         id={id}
         onTouchStart={this.touchStart.bind(this)}
         onTouchMove={this.touchMove.bind(this)}
@@ -107,7 +106,7 @@ export default class F2Canvas extends Component<F2CanvasPropTypes> {
   }
 }
 
-F2Canvas.fixF2 = function (F2: any): any {
+export function fixF2 (F2: any): any {
   if( ( !F2 ) || F2.TaroFixed){return F2}
   if (process.env.TARO_ENV !== 'h5') {
     function strLen(str) {
@@ -172,3 +171,5 @@ F2Canvas.fixF2 = function (F2: any): any {
   F2.TaroFixed = true;
   return F2
 }
+
+F2Canvas.fixF2 = fixF2;

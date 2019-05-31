@@ -36,6 +36,7 @@ class App extends Component {
       'pages/charts/pie-select/index',
       'pages/charts/column-select/index',
       'pages/charts/gradient-column/index',
+      'pages/charts/save-image/index',
     ],
     window: {
       backgroundTextStyle: 'light',

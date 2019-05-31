@@ -42,7 +42,8 @@ export default class Index extends Component {
       { name: 'steps-pan', value: '每日步数（柱状图平移）' }, // ok
       { name: 'pie-select', value: '饼图选中交互' }, // ok
       { name: 'column-select', value: '柱状图选中交互(可取消选中)' }, // ok
-      { name: 'gradient-column', value: '渐变色柱状图' } // ok
+      { name: 'gradient-column', value: '渐变色柱状图' }, // ok
+      { name: 'save-image', value: '保存图片' } // ok
     ]
   };
 
@@ -75,16 +76,14 @@ export default class Index extends Component {
             </View>)
           }
         </View>
-
         <View className='charts'>
           {
             this.state.charts.map(v => <View key={v.name} className='item' hoverClass='hover' onClick={this.gotoPage.bind(this, v.name)}>
-              <Image className='image' mode="aspectFit" src={'https://github.com/antvis/wx-f2/blob/master/img/' + v.name + '.png?raw=true'}/>
+              <Image className='image' mode='aspectFit' src={'https://github.com/antvis/wx-f2/blob/master/img/' + v.name + '.png?raw=true'} />
               <View className='text'>{ v.value }</View>
             </View>)
           }
         </View>
-
       </View>
     )
   }

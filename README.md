@@ -11,6 +11,7 @@ F2图表具体使用方法请参考: https://github.com/antvis/f2
 > 直接克隆代码 可查阅示例
 
 ##  更新日志
+* 2.1.2: `onCanvasInit` 增加scope导出, 增加导出图片示例, 如果h5编译报错可以尝试将`@tarojs/webpack-runner`降级到 1.2.x #18
 * 2.1.0: 支持了按需引用
   - `onInit` 修改为 `onCanvasInit`,回调不再返回F2
   - 增加 `F2Canvas.f2Fix()` 方法, 用于为F2增加小程序等兼容代码
@@ -62,10 +63,37 @@ require('@antv/f2/lib/geom/adjust/stack'); // 引入数据层叠调整类型
 
 | 事件名称 | 说明 | 返回参数 |
 |:---|:---|:---|
-| onCanvasInit | 画板初始化完毕事件 | (canvas: any, width: number, height: number): void <br> canvas: 小程序下为伪Canvas元素 |
+| onCanvasInit | 画板初始化完毕事件 | (canvas: any, width: number, height: number, scope: any): void <br> canvas: 小程序下为伪Canvas元素 |
 
 
 > F2Canvas宽高为100% 设置宽高需要在外面套个View
+
+
+## 保存图片
+```jsx harmony
+if(process.env.TARO_ENV === 'h5'){
+  const a = document.createElement("a");
+  a.href = canvas.toDataURL('image/png');
+  a.download = '图表.png';
+  a.click();
+}else {
+  const saveTempFile = Taro.canvasToTempFilePath({
+    canvasId: canvas.ctx.canvasId,
+  }, scope);
+  saveTempFile.then(image => {
+    Taro.saveImageToPhotosAlbum({
+      filePath: image.tempFilePath,
+    }).then(() => {
+      Taro.showToast({ title: '保存成功', icon: 'none' })
+    }, () => {
+      Taro.showToast({ title: '保存相册失败', icon: 'none' })
+    })
+  }, () => {
+    Taro.showToast({ title: '无法读取canvas', icon: 'none' })
+  })
+}
+```
+
 
 ## 示例
 
