@@ -1,5 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro';
 import F2Canvas from "../../../components/f2-canvas/f2-canvas";
+import {fixF2} from "../../../common/f2-tool"
 import {View} from '@tarojs/components';
 
 
@@ -16,7 +17,7 @@ export default class Index extends Component {
   state = { };
 
     initChart (canvas, width, height) {
-    F2Canvas.fixF2(F2);
+    fixF2(F2);
     const data = [
       { name: 'London', 月份: 'Jan.', 月均降雨量: 18.9 },
       { name: 'London', 月份: 'Feb.', 月均降雨量: 28.8 },

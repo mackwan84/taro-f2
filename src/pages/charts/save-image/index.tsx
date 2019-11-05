@@ -1,5 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro';
 import F2Canvas from "../../../components/f2-canvas/f2-canvas";
+import {fixF2} from "../../../common/f2-tool"
 import {Button, View} from '@tarojs/components';
 
 
@@ -22,7 +23,7 @@ export default class Index extends Component {
     this.canvasScope = scope;
     this.canvas = canvas;
 
-    F2Canvas.fixF2(F2);
+    fixF2(F2);
     const data = [
       { name: '超大盘能力', value: 6.5 },
       { name: '抗跌能力', value: 9.5 },

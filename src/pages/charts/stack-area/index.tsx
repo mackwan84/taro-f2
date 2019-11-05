@@ -1,5 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro';
 import F2Canvas from "../../../components/f2-canvas/f2-canvas";
+import {fixF2} from "../../../common/f2-tool"
 import {View} from '@tarojs/components';
 
 
@@ -15,8 +16,8 @@ export default class Index extends Component {
 
   state = { };
 
-    initChart (canvas, width, height) {
-    F2Canvas.fixF2(F2);
+  initChart (canvas, width, height) {
+    fixF2(F2);
     const arr = [
       { type: "湿度/%", value: 66.4, date: "2018-06-01 10:04:00" },
       { type: "温度/℃", value: 24.8, date: "2018-06-01 10:04:00" },
