@@ -38,12 +38,25 @@ $ yarn add taro-f2 @antv/f2
 }
 ```
 
+在 `weapp` 的 `compile.include` 中增加 `taro-f2`
+
+```
+{
+  weapp: {
+    compile: {
+      include: ['taro-f2']
+    }
+  }
+}
+```
+
 
 ## 使用指南
 
 在 Taro 文件中引入组件
 ```jsx harmony
 import { F2Canvas } from "taro-f2";
+import { fixF2 } from "taro-f2/dist/weapp/common/f2-tool.ts";
 import F2 from "@antv/f2"
 ```
 
@@ -52,6 +65,7 @@ import F2 from "@antv/f2"
 假如一个业务场景下仅需要绘制饼图（不带动画）
 ```jsx harmony
 import { F2Canvas } from "taro-f2";
+import { fixF2 } from "taro-f2/dist/weapp/common/f2-tool.ts";
 const F2 = require('@antv/f2/lib/core'); // 必须引入
 require('@antv/f2/lib/geom/interval'); // 引入 interval 几何标记
 require('@antv/f2/lib/coord/polar'); // 引入 极坐标
@@ -101,6 +115,7 @@ if(process.env.TARO_ENV === 'h5'){
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { F2Canvas } from 'taro-f2'
+import { fixF2 } from 'taro-f2/dist/weapp/common/f2-tool.ts'
 import F2 from '@antv/f2'
 
 export default class Index extends Component {
@@ -109,7 +124,7 @@ export default class Index extends Component {
     
     // ⚠️ 别忘了这行
     // 为了兼容微信与支付宝的小程序，你需要通过这个命令为F2打补丁
-    F2Canvas.fixF2(F2);
+    fixF2(F2);
 
     const data = [
       { name: '超大盘能力', value: 6.5 },

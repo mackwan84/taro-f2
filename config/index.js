@@ -14,6 +14,7 @@ const config = {
   plugins: {
     babel: {
       sourceMap: true,
+      babelrc: false,
       presets: [
         'env'
       ],
