@@ -5,9 +5,10 @@ import data from '../../../data/steps-pan.js'
 import {View} from '@tarojs/components';
 
 
-const F2 = require("@antv/f2");
-
-
+const F2 = require("@antv/f2/lib/index");
+require('@antv/f2/lib/interaction/');
+const ScrollBar = require('@antv/f2/lib/plugin/scroll-bar');
+F2.Chart.plugins.register([ScrollBar]);
 
 
 function formatNumber(n) {

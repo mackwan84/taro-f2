@@ -4,8 +4,7 @@ import data from '../../../data/sroll-line.js'
 import F2Canvas from "../../../components/f2-canvas/f2-canvas";
 import {fixF2} from "../../../common/f2-tool"
 
-const F2 = require("@antv/f2");
-
+const F2 = require("@antv/f2/lib/index");
 require('@antv/f2/lib/interaction/');
 const ScrollBar = require('@antv/f2/lib/plugin/scroll-bar');
 const Tooltip = require('@antv/f2/lib/plugin/tooltip');

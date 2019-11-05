@@ -3,7 +3,7 @@ import F2Canvas from "../../../components/f2-canvas/f2-canvas";
 import {View} from '@tarojs/components';
 
 
-const F2 = require("@antv/f2");
+const F2 = require("@antv/f2/lib/index");
 
 
 

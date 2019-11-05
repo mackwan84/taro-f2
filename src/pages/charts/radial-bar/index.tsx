@@ -4,7 +4,7 @@ import {fixF2} from "../../../common/f2-tool"
 import {View} from '@tarojs/components';
 
 
-const F2 = require("@antv/f2");
+const F2 = require("@antv/f2/lib/index");
 const { Shape, Util, Global, G, Animate } = F2;
 const { Vector2 } = G;
 

@@ -4,8 +4,8 @@ import {fixF2} from "../../../common/f2-tool"
 import {View, Text} from '@tarojs/components';
 
 
-const F2 = require("@antv/f2");
-
+const F2 = require("@antv/f2/lib/index");
+require('@antv/f2/lib/interaction/');
 
 
 export default class Index extends Component {
@@ -31,7 +31,7 @@ export default class Index extends Component {
     var chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height,
     });
     chart.source(data, {
       percent: {
