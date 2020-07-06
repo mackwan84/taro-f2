@@ -3,7 +3,6 @@ import { View, Text, Image } from '@tarojs/components';
 import './index.scss';
 
 export default class Index extends Component {
-
   /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -12,12 +11,12 @@ export default class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '首页'
-  }
+    navigationBarTitleText: '首页',
+  };
 
   state: {
-    charts: {name: string, value: string}[],
-    others: {name: string, value: string}[]
+    charts: { name: string; value: string }[];
+    others: { name: string; value: string }[];
   } = {
     charts: [
       { name: 'radial-bar', value: 'iwatch健康记录' }, // ok
@@ -35,7 +34,7 @@ export default class Index extends Component {
       { name: 'double-axis', value: '双 Y 轴' }, // ok
       { name: 'k', value: 'K 线图(异步获取数据)' }, // ok
       { name: 'stack-area', value: '层叠区域图' }, // ok
-      { name: 'multiCharts', value: '多图表好性能' } // ok
+      { name: 'multiCharts', value: '多图表好性能' }, // ok
     ],
     others: [
       { name: 'scroll-line', value: '线图平移交互(长按展示 tooltip)' }, // ok 长按真机貌似有问题 虚拟机可以 ???
@@ -43,49 +42,49 @@ export default class Index extends Component {
       { name: 'pie-select', value: '饼图选中交互' }, // ok
       { name: 'column-select', value: '柱状图选中交互(可取消选中)' }, // ok
       { name: 'gradient-column', value: '渐变色柱状图' }, // ok
-      { name: 'save-image', value: '保存图片' } // ok
-    ]
+      { name: 'save-image', value: '保存图片' }, // ok
+    ],
   };
 
-  componentWillMount () {
+  componentWillMount() {}
 
-  }
+  componentDidMount() {}
 
-  componentDidMount () { }
+  componentWillUnmount() {}
 
-  componentWillUnmount () { }
+  componentDidShow() {}
 
-  componentDidShow () { }
+  componentDidHide() {}
 
-  componentDidHide () { }
-
-  gotoPage (page) {
+  gotoPage(page) {
     Taro.navigateTo({
-      url: '/pages/charts/' + page + '/index'
+      url: '/pages/charts/' + page + '/index',
     });
   }
 
-  render () {
-
+  render() {
     return (
       <View className='index'>
         <View className='others'>
-          {
-            this.state.others.map(v => <View key={v.name} className='item' hoverClass='hover' onClick={this.gotoPage.bind(this, v.name)}>
-              <Text>{ v.value }</Text>
-            </View>)
-          }
+          {this.state.others.map((v) => (
+            <View key={v.name} className='item' hoverClass='hover' onClick={this.gotoPage.bind(this, v.name)}>
+              <Text>{v.value}</Text>
+            </View>
+          ))}
         </View>
         <View className='charts'>
-          {
-            this.state.charts.map(v => <View key={v.name} className='item' hoverClass='hover' onClick={this.gotoPage.bind(this, v.name)}>
-              <Image className='image' mode='aspectFit' src={'https://github.com/antvis/wx-f2/blob/master/img/' + v.name + '.png?raw=true'} />
-              <View className='text'>{ v.value }</View>
-            </View>)
-          }
+          {this.state.charts.map((v) => (
+            <View key={v.name} className='item' hoverClass='hover' onClick={this.gotoPage.bind(this, v.name)}>
+              <Image
+                className='image'
+                mode='aspectFit'
+                src={'https://github.com/antvis/wx-f2/blob/master/img/' + v.name + '.png?raw=true'}
+              />
+              <View className='text'>{v.value}</View>
+            </View>
+          ))}
         </View>
       </View>
-    )
+    );
   }
 }
-

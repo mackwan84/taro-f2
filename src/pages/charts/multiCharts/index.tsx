@@ -1,11 +1,8 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas from "../../../components/f2-canvas/f2-canvas";
-import {View} from '@tarojs/components';
+import F2Canvas from '../../../components/f2-canvas/f2-canvas';
+import { View } from '@tarojs/components';
 
-
-const F2 = require("@antv/f2/lib/index");
-
-
+const F2 = require('@antv/f2/lib/index');
 
 export default class Index extends Component {
   config: Config = {
@@ -13,43 +10,43 @@ export default class Index extends Component {
     disableScroll: true,
   };
 
-  state = { };
+  state = {};
 
-  drawBar(canvas, width, height){
+  drawBar(canvas, width, height) {
     const data = [
-      { State: 'WY', 年龄段 : '小于5岁', 人口数量: 25635 },
-      { State: 'WY', 年龄段 : '5至13岁', 人口数量: 1890 },
-      { State: 'WY', 年龄段 : '14至17岁', 人口数量: 9314 },
-      { State: 'DC', 年龄段 : '小于5岁', 人口数量: 30352 },
-      { State: 'DC', 年龄段 : '5至13岁', 人口数量: 20439 },
-      { State: 'DC', 年龄段 : '14至17岁', 人口数量: 10225 },
-      { State: 'VT', 年龄段 : '小于5岁', 人口数量: 38253 },
-      { State: 'VT', 年龄段 : '5至13岁', 人口数量: 42538 },
-      { State: 'VT', 年龄段 : '14至17岁', 人口数量: 15757 },
-      { State: 'ND', 年龄段 : '小于5岁', 人口数量: 51896 },
-      { State: 'ND', 年龄段 : '5至13岁', 人口数量: 67358 },
-      { State: 'ND', 年龄段 : '14至17岁', 人口数量: 18794 },
-      { State: 'AK', 年龄段 : '小于5岁', 人口数量: 72083 },
-      { State: 'AK', 年龄段 : '5至13岁', 人口数量: 85640 },
-      { State: 'AK', 年龄段 : '14至17岁', 人口数量: 22153 }
+      { State: 'WY', 年龄段: '小于5岁', 人口数量: 25635 },
+      { State: 'WY', 年龄段: '5至13岁', 人口数量: 1890 },
+      { State: 'WY', 年龄段: '14至17岁', 人口数量: 9314 },
+      { State: 'DC', 年龄段: '小于5岁', 人口数量: 30352 },
+      { State: 'DC', 年龄段: '5至13岁', 人口数量: 20439 },
+      { State: 'DC', 年龄段: '14至17岁', 人口数量: 10225 },
+      { State: 'VT', 年龄段: '小于5岁', 人口数量: 38253 },
+      { State: 'VT', 年龄段: '5至13岁', 人口数量: 42538 },
+      { State: 'VT', 年龄段: '14至17岁', 人口数量: 15757 },
+      { State: 'ND', 年龄段: '小于5岁', 人口数量: 51896 },
+      { State: 'ND', 年龄段: '5至13岁', 人口数量: 67358 },
+      { State: 'ND', 年龄段: '14至17岁', 人口数量: 18794 },
+      { State: 'AK', 年龄段: '小于5岁', 人口数量: 72083 },
+      { State: 'AK', 年龄段: '5至13岁', 人口数量: 85640 },
+      { State: 'AK', 年龄段: '14至17岁', 人口数量: 22153 },
     ];
     const chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height,
     });
 
     chart.source(data, {
-      '人口数量': {
-        tickCount: 5
-      }
+      人口数量: {
+        tickCount: 5,
+      },
     });
     chart.coord({
-      transposed: true
+      transposed: true,
     });
     chart.axis('State', {
       line: F2.Global._defaultAxis.line,
-      grid: null
+      grid: null,
     });
     chart.axis('人口数量', {
       line: null,
@@ -57,7 +54,7 @@ export default class Index extends Component {
       label(text, index, total) {
         const textCfg = {
           text: text / 1000 + ' k',
-          textAlign: 'left'
+          textAlign: 'left',
         };
         if (index === 0) {
           textCfg.textAlign = 'left';
@@ -66,7 +63,7 @@ export default class Index extends Component {
           textCfg.textAlign = 'right';
         }
         return textCfg;
-      }
+      },
     });
     chart.tooltip({
       custom: true, // 自定义 tooltip 内容框
@@ -75,13 +72,13 @@ export default class Index extends Component {
         const tooltipItems = obj.items;
         const legendItems = legend.items;
         const map = {};
-        legendItems.map(item => {
+        legendItems.map((item) => {
           map[item.name] = Object.assign({}, item);
         });
-        tooltipItems.map(item => {
+        tooltipItems.map((item) => {
           const { name, value } = item;
           if (map[name]) {
-            map[name].value = (value);
+            map[name].value = value;
           }
         });
         legend.setItems(Object.values(map));
@@ -89,7 +86,7 @@ export default class Index extends Component {
       onHide() {
         const legend = chart.get('legendController').legends.top[0];
         legend.setItems(chart.getLegendItems().country);
-      }
+      },
     });
     chart.interval().position('State*人口数量').color('年龄段').adjust('stack');
 
@@ -97,7 +94,7 @@ export default class Index extends Component {
 
     return chart;
   }
-  drawScatter(canvas, width, height){
+  drawScatter(canvas, width, height) {
     const data = [
       { x: 95, y: 95, z: 13.8, name: 'BE', country: 'Belgium' },
       { x: 86.5, y: 102.9, z: 14.7, name: 'DE', country: 'Germany' },
@@ -118,7 +115,7 @@ export default class Index extends Component {
     const chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height,
     });
     chart.source(data, {
       x: {
@@ -143,88 +140,81 @@ export default class Index extends Component {
     chart.axis('x', {
       label(text) {
         return {
-          text: text + ' gr' // 格式化坐标轴显示文本
+          text: text + ' gr', // 格式化坐标轴显示文本
         };
       },
       grid: {
         stroke: '#d9d9d9',
         lineWidth: 1,
-        lineDash: [ 2, 2 ]
-      }
+        lineDash: [2, 2],
+      },
     });
     chart.axis('y', {
       line: F2.Util.mix({}, F2.Global._defaultAxis.line, {
-        top: false
+        top: false,
       }),
       label(text) {
         if (text > 0) {
           return {
-            text: text + ' gr'
+            text: text + ' gr',
           };
         }
-      }
+      },
     });
     chart.tooltip(false);
-    chart
-      .point()
-      .position('x*y')
-      .color('#1890ff')
-      .size('z', [ 10, 40 ])
-      .shape('circle')
-      .style({
-        lineWidth: 1,
-        stroke: '#1890ff',
-        opacity: 0.3
-      });
+    chart.point().position('x*y').color('#1890ff').size('z', [10, 40]).shape('circle').style({
+      lineWidth: 1,
+      stroke: '#1890ff',
+      opacity: 0.3,
+    });
 
     // 绘制辅助文本
-    data.map(item => {
+    data.map((item) => {
       chart.guide().text({
-        position: [ item.x, item.y ],
+        position: [item.x, item.y],
         content: item.name,
         style: {
           textAlign: 'center',
           textBaseline: 'middle',
-          fill: '#1890FF'
-        }
+          fill: '#1890FF',
+        },
       });
     });
     chart.render();
     return chart;
   }
-  drawRadial(canvas, width, height){
+  drawRadial(canvas, width, height) {
     const data = [
       { tem: 6.9, city: 'Tokyo' },
       { tem: 11.3, city: 'New York' },
       { tem: 13.5, city: 'Berlin' },
       { tem: 17, city: 'London' },
-      { tem: 18.6, city: 'Beijing' }
+      { tem: 18.6, city: 'Beijing' },
     ];
     const chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height,
     });
     chart.coord('polar', {
       transposed: true,
-      endAngle: Math.PI
+      endAngle: Math.PI,
     });
 
     chart.source(data);
     chart.axis('city', {
       grid: null,
-      line: null
+      line: null,
     });
     chart.axis('tem', false);
     chart.legend({
-      position: 'right'
+      position: 'right',
     });
-    chart.interval().position('city*tem').
-    color('city');
+    chart.interval().position('city*tem').color('city');
     chart.render();
   }
 
-  render () {
+  render() {
     return (
       <View className='full-screen'>
         <View style='width: 100%;height: 33%;'>
@@ -237,7 +227,6 @@ export default class Index extends Component {
           <F2Canvas onCanvasInit={this.drawRadial.bind(this)}></F2Canvas>
         </View>
       </View>
-    )
+    );
   }
 }
-

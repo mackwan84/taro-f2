@@ -1,9 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas from "../../../components/f2-canvas/f2-canvas";
-import {View} from '@tarojs/components';
-import {fixF2} from "../../../common/f2-tool"
+import F2Canvas from '../../../components/f2-canvas/f2-canvas';
+import { View } from '@tarojs/components';
+import { fixF2 } from '../../../common/f2-tool';
 
-const F2 = require("@antv/f2/lib/index");
+const F2 = require('@antv/f2/lib/index');
 
 export default class Index extends Component {
   config: Config = {
@@ -11,14 +11,14 @@ export default class Index extends Component {
     disableScroll: true,
   };
 
-  state = { };
+  state = {};
 
-    initChart (canvas, width, height) {
+  initChart(canvas, width, height) {
     fixF2(F2);
     const chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height,
     });
 
     var Global = F2.Global;
@@ -27,20 +27,20 @@ export default class Index extends Component {
       { country: '印尼', population: 23489 },
       { country: '美国', population: 29034 },
       { country: '印度', population: 104970 },
-      { country: '中国', population: 131744 }
+      { country: '中国', population: 131744 },
     ];
 
     chart.source(data, {
       population: {
-        tickCount: 5
-      }
+        tickCount: 5,
+      },
     });
     chart.coord({
-      transposed: true
+      transposed: true,
     });
     chart.axis('country', {
       line: Global._defaultAxis.line,
-      grid: null
+      grid: null,
     });
     chart.axis('population', {
       line: null,
@@ -53,7 +53,7 @@ export default class Index extends Component {
           textCfg.textAlign = 'right';
         }
         return textCfg;
-      }
+      },
     });
     chart.interval().position('country*population');
     chart.render();
@@ -61,10 +61,11 @@ export default class Index extends Component {
     return chart;
   }
 
-  render () {
+  render() {
     return (
-      <View className='full-screen'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
-    )
+      <View className='full-screen'>
+        <F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas>
+      </View>
+    );
   }
 }
-

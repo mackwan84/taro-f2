@@ -1,4 +1,9 @@
-dist/
+dist/h5
+dist/weapp
+dist/alipay
+dist/qq
+dist/tt
+dist/swan
 .idea/
 .temp/
 .rn_temp/

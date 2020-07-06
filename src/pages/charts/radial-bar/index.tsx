@@ -1,35 +1,35 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas from "../../../components/f2-canvas/f2-canvas";
-import {fixF2} from "../../../common/f2-tool"
-import {View} from '@tarojs/components';
+import F2Canvas from '../../../components/f2-canvas/f2-canvas';
+import { fixF2 } from '../../../common/f2-tool';
+import { View } from '@tarojs/components';
 
-
-const F2 = require("@antv/f2/lib/index");
+const F2 = require('@antv/f2/lib/index');
 const { Shape, Util, Global, G, Animate } = F2;
 const { Vector2 } = G;
-
-
 
 export default class Index extends Component {
   config: Config = {
     navigationBarTitleText: 'iwatch健康记录',
     disableScroll: true,
     navigationBarBackgroundColor: '#000',
-    navigationBarTextStyle: "white"
+    navigationBarTextStyle: 'white',
   };
 
-  state = { };
+  state = {};
 
-
-  initChart (canvas, width, height) {
+  initChart(canvas, width, height) {
     fixF2(F2);
     // customize shape and animation
     Shape.registerShape('interval', 'tick', {
       draw(cfg, container) {
         const points = this.parsePoints(cfg.points);
-        const style = Util.mix({
-          stroke: cfg.color
-        }, Global.shape.interval, cfg.style);
+        const style = Util.mix(
+          {
+            stroke: cfg.color,
+          },
+          Global.shape.interval,
+          cfg.style
+        );
         if (cfg.isInCircle) {
           let newPoints = points.slice(0);
           if (this._coord.transposed) {
@@ -58,66 +58,75 @@ export default class Index extends Component {
           const coord = this._coord;
 
           const lineWidth = r - r0;
-          const newRadius = r - (lineWidth / 2);
+          const newRadius = r - lineWidth / 2;
 
           return container.addShape('Arc', {
             className: 'interval',
-            attrs: Util.mix({
-              x,
-              y,
-              startAngle,
-              endAngle,
-              r: newRadius,
-              lineWidth,
-              lineCap: 'round',
-              shadowColor: "rgba(0, 0, 0, 0.6)",
-              shadowOffsetX: 0,
-              shadowOffsetY: -5,
-              shadowBlur: 50
-            }, style)
+            attrs: Util.mix(
+              {
+                x,
+                y,
+                startAngle,
+                endAngle,
+                r: newRadius,
+                lineWidth,
+                lineCap: 'round',
+                shadowColor: 'rgba(0, 0, 0, 0.6)',
+                shadowOffsetX: 0,
+                shadowOffsetY: -5,
+                shadowBlur: 50,
+              },
+              style
+            ),
           });
         }
-      }
+      },
     });
 
     Animate.registerAnimation('waveIn', function (shape, animateCfg, coord) {
       const startAngle = shape.attr('startAngle');
       const endAngle = shape.attr('endAngle');
       shape.attr('endAngle', startAngle);
-      shape.animate().to(Util.mix({
-        attrs: {
-          endAngle: endAngle
-        }
-      }, animateCfg));
+      shape.animate().to(
+        Util.mix(
+          {
+            attrs: {
+              endAngle: endAngle,
+            },
+          },
+          animateCfg
+        )
+      );
     });
     // ------
 
     const data = [
       { name: 'activity1', percent: 2370, color: '#1ad5de', icon: 'stand.png', bgColor: '#183C3D' },
       { name: 'activity2', percent: 80, color: '#a0ff03', icon: 'walk.png', bgColor: '#324214' },
-      { name: 'activity3', percent: 65, color: '#e90b3a', icon: 'run.png', bgColor: '#40131D' }
+      { name: 'activity3', percent: 65, color: '#e90b3a', icon: 'run.png', bgColor: '#40131D' },
     ];
 
     const chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height,
     });
 
     chart.source(data, {
       percent: {
-        max: 100
-      }
+        max: 100,
+      },
     });
     chart.legend(false);
     chart.coord('polar', {
       transposed: true,
-      innerRadius: 0.382
+      innerRadius: 0.382,
     });
     chart.axis(false);
-    chart.interval()
+    chart
+      .interval()
       .position('name*percent')
-      .color('color', val => {
+      .color('color', (val) => {
         return val;
       })
       .shape('tick')
@@ -126,12 +135,12 @@ export default class Index extends Component {
         appear: {
           animation: 'waveIn',
           duration: 1500,
-          easing: 'elasticOut'
+          easing: 'elasticOut',
         },
         update: {
           duration: 1500,
-          easing: 'elasticOut'
-        }
+          easing: 'elasticOut',
+        },
       });
 
     data.map((obj, index) => {
@@ -142,8 +151,8 @@ export default class Index extends Component {
         top: false,
         style: {
           lineWidth: 26,
-          stroke: obj.bgColor
-        }
+          stroke: obj.bgColor,
+        },
       });
     });
     chart.render();
@@ -160,10 +169,11 @@ export default class Index extends Component {
     return chart;
   }
 
-  render () {
+  render() {
     return (
-      <View className='full-screen' style='background: #000;'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
-    )
+      <View className='full-screen' style='background: #000;'>
+        <F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas>
+      </View>
+    );
   }
 }
-

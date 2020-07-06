@@ -1,12 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas from "../../../components/f2-canvas/f2-canvas";
-import {fixF2} from "../../../common/f2-tool"
-import {View} from '@tarojs/components';
+import F2Canvas from '../../../components/f2-canvas/f2-canvas';
+import { fixF2 } from '../../../common/f2-tool';
+import { View } from '@tarojs/components';
 
-
-const F2 = require("@antv/f2/lib/index");
-
-
+const F2 = require('@antv/f2/lib/index');
 
 export default class Index extends Component {
   config: Config = {
@@ -15,13 +12,14 @@ export default class Index extends Component {
   };
 
   state: {
-    data?: any[],
+    data?: any[];
   } = {};
 
-  loadData(){
-      Taro.request({
-        url: 'https://antv.alipay.com/assets/data/candle-sticks.json',
-      }).then((res) => {
+  loadData() {
+    Taro.request({
+      url: 'https://antv.alipay.com/assets/data/candle-sticks.json',
+    }).then(
+      (res) => {
         console.log('res', res);
 
         const data = (res.data || []).slice(0, 50);
@@ -30,43 +28,44 @@ export default class Index extends Component {
         });
         data.forEach(function (obj) {
           obj.range = [obj.start, obj.end, obj.max, obj.min];
-          obj.trend = (obj.start <= obj.end) ? 0 : 1;
+          obj.trend = obj.start <= obj.end ? 0 : 1;
         });
         this.setState({
-          data: data
-        })
-      }, (err)=> {
+          data: data,
+        });
+      },
+      (err) => {
         Taro.showToast({
           title: err.errMsg,
-          icon: 'none'
-        })
-      })
-
+          icon: 'none',
+        });
+      }
+    );
   }
 
-  initChart (canvas, width, height) {
+  initChart(canvas, width, height) {
     fixF2(F2);
 
     const data = this.state.data || [];
     const chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height,
     });
 
     chart.source(data, {
       range: {
-        tickCount: 5
+        tickCount: 5,
       },
       time: {
-        tickCount: 3
-      }
+        tickCount: 3,
+      },
     });
 
     chart.axis('time', {
       label(text, index, total) {
         const cfg = {
-          textAlign: 'center'
+          textAlign: 'center',
         };
         // 第一个点左对齐，最后一个点右对齐，其余居中，只有一个点时左对齐
         if (index === 0) {
@@ -76,7 +75,7 @@ export default class Index extends Component {
           cfg.textAlign = 'end';
         }
         return cfg;
-      }
+      },
     });
     chart.legend({
       custom: true,
@@ -84,12 +83,14 @@ export default class Index extends Component {
       items: [
         { name: '上涨', marker: 'circle', fill: '#FC674D' },
         { name: '下降', marker: 'circle', fill: '#9AC2AB' },
-      ]
+      ],
     });
     chart.tooltip({
-      showCrosshairs: true
+      showCrosshairs: true,
     });
-    chart.schema().position('time*range')
+    chart
+      .schema()
+      .position('time*range')
       .color('trend', function (trend) {
         return ['#FC674D', '#fff'][trend];
       })
@@ -99,22 +100,21 @@ export default class Index extends Component {
           if (val === 1) {
             return '#9AC2AB';
           }
-        }
+        },
       });
     chart.render();
     return chart;
   }
 
-  componentWillMount () {
-    this.loadData()
+  componentWillMount() {
+    this.loadData();
   }
 
-  render () {
+  render() {
     return (
       <View className='full-screen'>
         {this.state.data && <F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas>}
       </View>
-    )
+    );
   }
 }
-

@@ -1,53 +1,50 @@
-const path = require('path')
+const path = require('path');
 
 const config = {
-  projectName: 'taro-f2',
+  projectName: 'taro-antv-f2',
   date: '2018-10-30',
   designWidth: 750,
   deviceRatio: {
     '640': 2.34 / 2,
     '750': 1,
-    '828': 1.81 / 2
+    '828': 1.81 / 2,
   },
   sourceRoot: 'src',
-  outputRoot: 'dist',
+  outputRoot: `dist/${process.env.TARO_BUILD_TYPE || process.env.TARO_ENV}`,
   plugins: {
     babel: {
       sourceMap: true,
       babelrc: false,
-      presets: [
-        'env'
-      ],
-      plugins: [
-        'transform-class-properties',
-        'transform-decorators-legacy',
-        'transform-object-rest-spread'
-      ]
-    }
+      presets: ['env'],
+      plugins: ['transform-class-properties', 'transform-decorators-legacy', 'transform-object-rest-spread'],
+    },
+    uglify: {
+      enable: false,
+    },
+    csso: {
+      enable: false,
+    },
   },
-  defineConstants: {
-  },
+  defineConstants: {},
   alias: {
     'taro-f2': path.resolve(__dirname, '../src/index.ts'),
   },
   copy: {
-     patterns: [
-    ],
-    options: {
-    }
+    patterns: [],
+    options: {},
   },
   weapp: {
     module: {
       postcss: {
         autoprefixer: {
-          enable: true
+          enable: true,
         },
         url: {
           enable: true,
-          limit: 10240
-        }
-      }
-    }
+          limit: 10240,
+        },
+      },
+    },
   },
   h5: {
     publicPath: '/',
@@ -55,43 +52,43 @@ const config = {
     module: {
       postcss: {
         autoprefixer: {
-          enable: true
-        }
-      }
-    }
-  }
-}
+          enable: true,
+        },
+      },
+    },
+  },
+};
 
 if (process.env.TARO_BUILD_TYPE === 'ui') {
   Object.assign(config.h5, {
     enableSourceMap: false,
     enableExtract: false,
-    enableDll: false
-  })
-  config.h5.webpackChain = chain => {
-    chain.plugins.delete('htmlWebpackPlugin')
-    chain.plugins.delete('addAssetHtmlWebpackPlugin')
+    enableDll: false,
+  });
+  config.h5.webpackChain = (chain) => {
+    chain.plugins.delete('htmlWebpackPlugin');
+    chain.plugins.delete('addAssetHtmlWebpackPlugin');
     chain.merge({
       output: {
         path: path.join(process.cwd(), 'dist', 'h5'),
         filename: 'index.js',
         libraryTarget: 'umd',
-        library: 'taro-f2'
+        library: 'taro-f2',
       },
       externals: {
         nervjs: 'commonjs2 nervjs',
         classnames: 'commonjs2 classnames',
         '@tarojs/components': 'commonjs2 @tarojs/components',
         '@tarojs/taro-h5': 'commonjs2 @tarojs/taro-h5',
-        'weui': 'commonjs2 weui'
-      }
-    })
-  }
+        weui: 'commonjs2 weui',
+      },
+    });
+  };
 }
 
 module.exports = function (merge) {
   if (process.env.NODE_ENV === 'development') {
-    return merge({}, config, require('./dev'))
+    return merge({}, config, require('./dev'));
   }
-  return merge({}, config, require('./prod'))
-}
+  return merge({}, config, require('./prod'));
+};

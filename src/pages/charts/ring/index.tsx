@@ -1,12 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas from "../../../components/f2-canvas/f2-canvas";
-import {fixF2} from "../../../common/f2-tool"
-import {View} from '@tarojs/components';
+import F2Canvas from '../../../components/f2-canvas/f2-canvas';
+import { fixF2 } from '../../../common/f2-tool';
+import { View } from '@tarojs/components';
 
-
-const F2 = require("@antv/f2/lib/index");
-
-
+const F2 = require('@antv/f2/lib/index');
 
 export default class Index extends Component {
   config: Config = {
@@ -14,10 +11,9 @@ export default class Index extends Component {
     disableScroll: true,
   };
 
-  state = { };
+  state = {};
 
-
-  initChart (canvas, width, height) {
+  initChart(canvas, width, height) {
     fixF2(F2);
     const { Util } = F2;
 
@@ -40,8 +36,8 @@ export default class Index extends Component {
           x2: point2.x,
           y2: point2.y,
           lineDash: [0, 2, 2],
-          stroke: '#808080'
-        }
+          stroke: '#808080',
+        },
       });
       const text = group.addShape('Text', {
         attrs: {
@@ -50,8 +46,8 @@ export default class Index extends Component {
           text: origin._origin.type + '  ' + origin._origin.cost + ' 元',
           fill: '#808080',
           textAlign: 'left',
-          textBaseline: 'bottom'
-        }
+          textBaseline: 'bottom',
+        },
       });
       const textWidth = text.getBBox().width;
       const baseLine = group.addShape('Line', {
@@ -60,8 +56,8 @@ export default class Index extends Component {
           y1: point2.y,
           x2: point2.x,
           y2: point2.y,
-          stroke: '#808080'
-        }
+          stroke: '#808080',
+        },
       });
       if (point2.x > center.x) {
         baseLine.attr('x2', point2.x + textWidth);
@@ -82,17 +78,17 @@ export default class Index extends Component {
       { type: '健康', cost: 118.5, a: '1' },
       { type: '生活用品', cost: 78.64, a: '1' },
       { type: '其他', cost: 14.9, a: '1' },
-      { type: '交通出行', cost: 8.7, a: '1' }
+      { type: '交通出行', cost: 8.7, a: '1' },
     ];
 
     let sum = 0;
-    data.map(obj => {
+    data.map((obj) => {
       sum += obj.cost;
     });
     const chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height,
     });
     chart.source(data);
     let lastClickedShape;
@@ -113,7 +109,7 @@ export default class Index extends Component {
 
         let clickedShape;
         // 找到被点击的 shape
-        Util.each(shapes, shape => {
+        Util.each(shapes, (shape) => {
           const origin = shape.get('origin');
           if (origin && origin._origin.type === dataValue) {
             clickedShape = shape;
@@ -122,68 +118,81 @@ export default class Index extends Component {
         });
 
         if (lastClickedShape) {
-          lastClickedShape.animate().to({
-            attrs: {
-              lineWidth: 0
-            },
-            duration: 200
-          }).onStart(() => {
-            if (lastClickedShape.label) {
-              lastClickedShape.label.hide();
-            }
-          }).onEnd(() => {
-            lastClickedShape.set('selected', false);
-          });
+          lastClickedShape
+            .animate()
+            .to({
+              attrs: {
+                lineWidth: 0,
+              },
+              duration: 200,
+            })
+            .onStart(() => {
+              if (lastClickedShape.label) {
+                lastClickedShape.label.hide();
+              }
+            })
+            .onEnd(() => {
+              lastClickedShape.set('selected', false);
+            });
         }
 
         if (clickedShape.get('selected')) {
-          clickedShape.animate().to({
-            attrs: {
-              lineWidth: 0
-            },
-            duration: 200
-          }).onStart(() => {
-            if (clickedShape.label) {
-              clickedShape.label.hide();
-            }
-          }).onEnd(() => {
-            clickedShape.set('selected', false);
-          });
+          clickedShape
+            .animate()
+            .to({
+              attrs: {
+                lineWidth: 0,
+              },
+              duration: 200,
+            })
+            .onStart(() => {
+              if (clickedShape.label) {
+                clickedShape.label.hide();
+              }
+            })
+            .onEnd(() => {
+              clickedShape.set('selected', false);
+            });
         } else {
           const color = clickedShape.attr('fill');
-          clickedShape.animate().to({
-            attrs: {
-              lineWidth: 5
-            },
-            duration: 350,
-            easing: 'bounceOut'
-          }).onStart(() => {
-            clickedShape.attr('stroke', color);
-            clickedShape.set('zIndex', 1);
-            container.sort();
-          }).onEnd(() => {
-            clickedShape.set('selected', true);
-            clickedShape.set('zIndex', 0);
-            container.sort();
-            lastClickedShape = clickedShape;
-            if (clickedShape.label) {
-              clickedShape.label.show();
-            } else {
-              drawLabel(clickedShape, coord, canvas);
-            }
-            canvas.draw();
-          });
+          clickedShape
+            .animate()
+            .to({
+              attrs: {
+                lineWidth: 5,
+              },
+              duration: 350,
+              easing: 'bounceOut',
+            })
+            .onStart(() => {
+              clickedShape.attr('stroke', color);
+              clickedShape.set('zIndex', 1);
+              container.sort();
+            })
+            .onEnd(() => {
+              clickedShape.set('selected', true);
+              clickedShape.set('zIndex', 0);
+              container.sort();
+              lastClickedShape = clickedShape;
+              if (clickedShape.label) {
+                clickedShape.label.show();
+              } else {
+                drawLabel(clickedShape, coord, canvas);
+              }
+              canvas.draw();
+            });
         }
-      }
+      },
     });
     chart.coord('polar', {
       transposed: true,
       innerRadius: 0.7,
-      radius: 0.5
+      radius: 0.5,
     });
     chart.axis(false);
     chart.tooltip(false);
-    chart.interval()
+    chart
+      .interval()
       .position('a*cost')
       .color('type', ['#1890FF', '#13C2C2', '#2FC25B', '#FACC14', '#F04864', '#8543E0'])
       .adjust('stack');
@@ -192,17 +201,18 @@ export default class Index extends Component {
       position: ['50%', '50%'],
       content: sum.toFixed(2),
       style: {
-        fontSize: 24
-      }
+        fontSize: 24,
+      },
     });
     chart.render();
     return chart;
   }
 
-  render () {
+  render() {
     return (
-      <View className='full-screen'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
-    )
+      <View className='full-screen'>
+        <F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas>
+      </View>
+    );
   }
 }
-

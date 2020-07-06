@@ -17,10 +17,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "jsx": "preserve",
-    "typeRoots": [
-      "node_modules/@types",
-      "global.d.ts"
-    ]
+    "typeRoots": ["node_modules/@types", "global.d.ts"]
   },
   "compileOnSave": false
 }

@@ -1,9 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas from "../../../components/f2-canvas/f2-canvas";
-import {fixF2} from "../../../common/f2-tool"
-import {View} from '@tarojs/components';
+import F2Canvas from '../../../components/f2-canvas/f2-canvas';
+import { fixF2 } from '../../../common/f2-tool';
+import { View } from '@tarojs/components';
 
-const F2 = require("@antv/f2/lib/index");
+const F2 = require('@antv/f2/lib/index');
 
 export default class Index extends Component {
   config: Config = {
@@ -11,8 +11,8 @@ export default class Index extends Component {
     disableScroll: true,
   };
 
-  state = { };
-    initChart (canvas, width, height) {
+  state = {};
+  initChart(canvas, width, height) {
     fixF2(F2);
     const data = [
       { year: '1951 年', sales: 38 },
@@ -27,13 +27,13 @@ export default class Index extends Component {
     const chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height,
     });
 
     chart.source(data, {
       sales: {
-        tickCount: 5
-      }
+        tickCount: 5,
+      },
     });
     chart.tooltip(false);
     chart.interval().position('year*sales');
@@ -44,7 +44,7 @@ export default class Index extends Component {
     const chartCanvas = chart.get('canvas');
     const group = chartCanvas.addGroup();
     const shapes = {};
-    data.map(obj => {
+    data.map((obj) => {
       const point = chart.getPosition(obj);
       const text = group.addShape('text', {
         attrs: {
@@ -53,8 +53,8 @@ export default class Index extends Component {
           text: obj.sales,
           textAlign: 'center',
           textBaseline: 'bottom',
-          fill: '#808080'
-        }
+          fill: '#808080',
+        },
       });
 
       shapes[obj.year] = text; // 缓存该 shape, 便于后续查找
@@ -65,33 +65,35 @@ export default class Index extends Component {
     chart.interaction('interval-select', {
       selectAxisStyle: {
         fill: '#000',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
       },
       mode: 'range',
       onEnd(ev) {
         const { data, selected } = ev;
-        lastTextShape && lastTextShape.attr({
-          fill: '#808080',
-          fontWeight: 'normal'
-        });
+        lastTextShape &&
+          lastTextShape.attr({
+            fill: '#808080',
+            fontWeight: 'normal',
+          });
         if (selected) {
           const textShape = shapes[data.year];
           textShape.attr({
             fill: '#000',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
           });
           lastTextShape = textShape;
         }
         chartCanvas.draw();
-      }
+      },
     });
     return chart;
   }
 
-  render () {
+  render() {
     return (
-      <View className='full-screen'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
-    )
+      <View className='full-screen'>
+        <F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas>
+      </View>
+    );
   }
 }
-

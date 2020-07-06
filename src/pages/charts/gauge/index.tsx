@@ -1,12 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas from "../../../components/f2-canvas/f2-canvas";
-import {fixF2} from "../../../common/f2-tool"
-import {View} from '@tarojs/components';
+import F2Canvas from '../../../components/f2-canvas/f2-canvas';
+import { fixF2 } from '../../../common/f2-tool';
+import { View } from '@tarojs/components';
 
-
-const F2 = require("@antv/f2/lib/index");
-
-
+const F2 = require('@antv/f2/lib/index');
 
 export default class Index extends Component {
   config: Config = {
@@ -14,14 +11,12 @@ export default class Index extends Component {
     disableScroll: true,
   };
 
-  state = { };
+  state = {};
 
-    initChart (canvas, width, height) {
+  initChart(canvas, width, height) {
     fixF2(F2);
     const Shape = F2.Shape;
-    const data = [
-      { pointer: '当前收益', value: 5, length: 2, y: 1.05 }
-    ];
+    const data = [{ pointer: '当前收益', value: 5, length: 2, y: 1.05 }];
     //自定义绘制数据的的形状
     Shape.registerShape('point', 'dashBoard', {
       getPoints: function (cfg) {
@@ -30,7 +25,7 @@ export default class Index extends Component {
 
         return [
           { x: x, y: y },
-          { x: x, y: 0.4 }
+          { x: x, y: 0.4 },
         ];
       },
       draw: function (cfg, container) {
@@ -43,8 +38,8 @@ export default class Index extends Component {
           attrs: {
             points: [point1, point2],
             stroke: '#1890FF',
-            lineWidth: 2
-          }
+            lineWidth: 2,
+          },
         });
 
         const text = cfg.origin._origin.value.toString();
@@ -56,8 +51,8 @@ export default class Index extends Component {
             fill: '#1890FF',
             fontSize: 24,
             textAlign: 'center',
-            textBaseline: 'bottom'
-          }
+            textBaseline: 'bottom',
+          },
         });
         const text2 = container.addShape('Text', {
           attrs: {
@@ -66,19 +61,19 @@ export default class Index extends Component {
             y: cfg.center.y,
             fillStyle: '#ccc',
             textAlign: 'center',
-            textBaseline: 'top'
-          }
+            textBaseline: 'top',
+          },
         });
 
         return [line, text1, text2];
-      }
+      },
     });
 
     const chart = new F2.Chart({
       el: canvas,
       width,
       height,
-      animate: false
+      animate: false,
     });
     chart.source(data, {
       value: {
@@ -86,17 +81,17 @@ export default class Index extends Component {
         min: 0,
         max: 15,
         ticks: [0, 5, 7.5, 10, 15],
-        nice: false
+        nice: false,
       },
       length: { type: 'linear', min: 0, max: 10 },
-      y: { type: 'linear', min: 0, max: 1 }
+      y: { type: 'linear', min: 0, max: 1 },
     });
 
     chart.coord('polar', {
       inner: 0,
       startAngle: -1.25 * Math.PI,
       endAngle: 0.25 * Math.PI,
-      radius: 0.8
+      radius: 0.8,
     });
 
     //配置value轴刻度线
@@ -104,11 +99,11 @@ export default class Index extends Component {
       tickLine: {
         strokeStyle: '#ccc',
         lineWidth: 2,
-        length: -5
+        length: -5,
       },
       label: null,
       grid: null,
-      line: null
+      line: null,
     });
 
     chart.axis('y', false);
@@ -120,8 +115,8 @@ export default class Index extends Component {
       style: {
         strokeStyle: '#1890FF',
         lineWidth: 5,
-        lineCap: 'round'
-      }
+        lineCap: 'round',
+      },
     });
     chart.guide().arc({
       start: [5.2, 1.05],
@@ -129,8 +124,8 @@ export default class Index extends Component {
       style: {
         strokeStyle: '#ccc',
         lineWidth: 5,
-        lineCap: 'round'
-      }
+        lineCap: 'round',
+      },
     });
     chart.guide().arc({
       start: [10.2, 1.05],
@@ -138,16 +133,16 @@ export default class Index extends Component {
       style: {
         strokeStyle: '#ccc',
         lineWidth: 5,
-        lineCap: 'round'
-      }
+        lineCap: 'round',
+      },
     });
     chart.guide().arc({
       start: [0, 1.2],
       end: [15, 1.2],
       style: {
         strokeStyle: '#ccc',
-        lineWidth: 1
-      }
+        lineWidth: 1,
+      },
     });
 
     chart.guide().text({
@@ -156,8 +151,8 @@ export default class Index extends Component {
       style: {
         fillStyle: '#ccc',
         font: '18px Arial',
-        textAlign: 'center'
-      }
+        textAlign: 'center',
+      },
     });
     chart.guide().text({
       position: [7.5, 0.7],
@@ -165,8 +160,8 @@ export default class Index extends Component {
       style: {
         fillStyle: '#ccc',
         font: '18px Arial',
-        textAlign: 'center'
-      }
+        textAlign: 'center',
+      },
     });
     chart.guide().text({
       position: [15.5, 1.3],
@@ -174,22 +169,20 @@ export default class Index extends Component {
       style: {
         fillStyle: '#ccc',
         font: '18px Arial',
-        textAlign: 'center'
-      }
+        textAlign: 'center',
+      },
     });
 
-    chart.point().position('value*y')
-      .size('length')
-      .color('#1890FF')
-      .shape('dashBoard');
+    chart.point().position('value*y').size('length').color('#1890FF').shape('dashBoard');
     chart.render();
     return chart;
   }
 
-  render () {
+  render() {
     return (
-      <View className='full-screen'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
-    )
+      <View className='full-screen'>
+        <F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas>
+      </View>
+    );
   }
 }
-

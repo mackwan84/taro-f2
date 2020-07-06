@@ -1,12 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas from "../../../components/f2-canvas/f2-canvas";
-import {fixF2} from "../../../common/f2-tool"
-import {View} from '@tarojs/components';
+import F2Canvas from '../../../components/f2-canvas/f2-canvas';
+import { fixF2 } from '../../../common/f2-tool';
+import { View } from '@tarojs/components';
 
-
-const F2 = require("@antv/f2/lib/index");
-
-
+const F2 = require('@antv/f2/lib/index');
 
 export default class Index extends Component {
   config: Config = {
@@ -14,25 +11,25 @@ export default class Index extends Component {
     disableScroll: true,
   };
 
-  state = { };
+  state = {};
 
-    initChart (canvas, width, height) {
+  initChart(canvas, width, height) {
     fixF2(F2);
     const data = [
       { year: '1951 年', sales: 38 },
       { year: '1952 年', sales: 52 },
-      { year: '1956 年', sales: 61 }
+      { year: '1956 年', sales: 61 },
     ];
     const chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height,
     });
 
     chart.source(data, {
       sales: {
-        tickCount: 5
-      }
+        tickCount: 5,
+      },
     });
     chart.tooltip({
       showItemMarker: false,
@@ -41,17 +38,18 @@ export default class Index extends Component {
         items[0].name = null;
         items[0].name = items[0].title;
         items[0].value = '¥ ' + items[0].value;
-      }
+      },
     });
     chart.interval().position('year*sales').color('l(90) 0:red 1:white'); // 使用创建的渐变色对象进行颜色填充
     chart.render();
     return chart;
   }
 
-  render () {
+  render() {
     return (
-      <View className='full-screen'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
-    )
+      <View className='full-screen'>
+        <F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas>
+      </View>
+    );
   }
 }
-

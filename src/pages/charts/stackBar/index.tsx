@@ -1,12 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas from "../../../components/f2-canvas/f2-canvas";
-import {fixF2} from "../../../common/f2-tool"
-import {View} from '@tarojs/components';
+import F2Canvas from '../../../components/f2-canvas/f2-canvas';
+import { fixF2 } from '../../../common/f2-tool';
+import { View } from '@tarojs/components';
 
-
-const F2 = require("@antv/f2/lib/index");
-
-
+const F2 = require('@antv/f2/lib/index');
 
 export default class Index extends Component {
   config: Config = {
@@ -14,9 +11,9 @@ export default class Index extends Component {
     disableScroll: true,
   };
 
-  state = { };
+  state = {};
 
-  initChart (canvas, width, height) {
+  initChart(canvas, width, height) {
     fixF2(F2);
     const data = [
       { State: 'WY', 年龄段: '小于5岁', 人口数量: 25635 },
@@ -33,32 +30,32 @@ export default class Index extends Component {
       { State: 'ND', 年龄段: '14至17岁', 人口数量: 18794 },
       { State: 'AK', 年龄段: '小于5岁', 人口数量: 72083 },
       { State: 'AK', 年龄段: '5至13岁', 人口数量: 85640 },
-      { State: 'AK', 年龄段: '14至17岁', 人口数量: 22153 }
+      { State: 'AK', 年龄段: '14至17岁', 人口数量: 22153 },
     ];
     const chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height,
     });
 
     chart.source(data, {
-      '人口数量': {
-        tickCount: 5
-      }
+      人口数量: {
+        tickCount: 5,
+      },
     });
     chart.coord({
-      transposed: true
+      transposed: true,
     });
     chart.axis('State', {
       line: F2.Global._defaultAxis.line,
-      grid: null
+      grid: null,
     });
     chart.axis('人口数量', {
       line: null,
       grid: F2.Global._defaultAxis.grid,
       label(text, index, total) {
         const textCfg = {
-          text: text / 1000 + ' k'
+          text: text / 1000 + ' k',
         };
         if (index === 0) {
           textCfg.textAlign = 'left';
@@ -67,7 +64,7 @@ export default class Index extends Component {
           textCfg.textAlign = 'right';
         }
         return textCfg;
-      }
+      },
     });
     chart.tooltip({
       custom: true, // 自定义 tooltip 内容框
@@ -76,13 +73,13 @@ export default class Index extends Component {
         const tooltipItems = obj.items;
         const legendItems = legend.items;
         const map = {};
-        legendItems.map(item => {
+        legendItems.map((item) => {
           map[item.name] = Object.assign({}, item);
         });
-        tooltipItems.map(item => {
+        tooltipItems.map((item) => {
           const { name, value } = item;
           if (map[name]) {
-            map[name].value = (value);
+            map[name].value = value;
           }
         });
         legend.setItems(Object.values(map));
@@ -90,7 +87,7 @@ export default class Index extends Component {
       onHide() {
         const legend = chart.get('legendController').legends.top[0];
         legend.setItems(chart.getLegendItems().country);
-      }
+      },
     });
     chart.interval().position('State*人口数量').color('年龄段').adjust('stack');
 
@@ -98,10 +95,11 @@ export default class Index extends Component {
     return chart;
   }
 
-  render () {
+  render() {
     return (
-      <View className='full-screen'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
-    )
+      <View className='full-screen'>
+        <F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas>
+      </View>
+    );
   }
 }
-

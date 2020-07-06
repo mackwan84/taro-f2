@@ -1,20 +1,17 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import F2Canvas from "../../../components/f2-canvas/f2-canvas";
-import {fixF2} from "../../../common/f2-tool"
-import data from '../../../data/steps-pan.js'
-import {View} from '@tarojs/components';
+import F2Canvas from '../../../components/f2-canvas/f2-canvas';
+import { fixF2 } from '../../../common/f2-tool';
+import data from '../../../data/steps-pan.js';
+import { View } from '@tarojs/components';
 
-
-const F2 = require("@antv/f2/lib/index");
+const F2 = require('@antv/f2/lib/index');
 require('@antv/f2/lib/interaction/');
 const ScrollBar = require('@antv/f2/lib/plugin/scroll-bar');
 F2.Chart.plugins.register([ScrollBar]);
 
-
 function formatNumber(n) {
   return String(Math.floor(n * 100) / 100).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
-
 
 export default class Index extends Component {
   config: Config = {
@@ -22,12 +19,12 @@ export default class Index extends Component {
     disableScroll: true,
   };
 
-  state = { };
+  state = {};
 
-    initChart (canvas, width, height) {
+  initChart(canvas, width, height) {
     fixF2(F2);
     const originDates = [];
-    data.forEach(obj => {
+    data.forEach((obj) => {
       if (obj.date >= '2018-05-01') {
         originDates.push(obj.date);
       }
@@ -37,7 +34,7 @@ export default class Index extends Component {
       el: canvas,
       width,
       height,
-      animate: false
+      animate: false,
     });
 
     chart.source(data, {
@@ -45,52 +42,55 @@ export default class Index extends Component {
         type: 'timeCat',
         tickCount: 5,
         values: originDates,
-        mask: 'MM-DD'
+        mask: 'MM-DD',
       },
       steps: {
-        tickCount: 5
-      }
+        tickCount: 5,
+      },
     });
 
     chart.axis('date', {
       tickLine: {
         length: 4,
-        stroke: '#cacaca'
+        stroke: '#cacaca',
       },
       label: {
-        fill: '#cacaca'
+        fill: '#cacaca',
       },
       line: {
-        top: true
-      }
+        top: true,
+      },
     });
     chart.axis('steps', {
       position: 'right',
       label(text) {
         return {
           text: formatNumber(text * 1),
-          fill: '#cacaca'
+          fill: '#cacaca',
         };
       },
       grid: {
-        stroke: '#d1d1d1'
-      }
+        stroke: '#d1d1d1',
+      },
     });
     chart.tooltip({
       showItemMarker: false,
       background: {
         radius: 2,
-        padding: [3, 5]
+        padding: [3, 5],
       },
       onShow(ev) {
         const items = ev.items;
         items[0].name = '';
         items[0].value = items[0].value + ' 步';
-      }
+      },
     });
-    chart.interval().position('date*steps').style({
-      radius: [ 2, 2, 0, 0 ]
-    });
+    chart
+      .interval()
+      .position('date*steps')
+      .style({
+        radius: [2, 2, 0, 0],
+      });
 
     // 定义进度条
     chart.scrollBar({
@@ -98,18 +98,19 @@ export default class Index extends Component {
       xStyle: {
         backgroundColor: '#e8e8e8',
         fillerColor: '#808080',
-        offsetY: -2
-      }
+        offsetY: -2,
+      },
     });
     chart.interaction('pan');
     chart.render();
     return chart;
   }
 
-  render () {
+  render() {
     return (
-      <View className='full-screen'><F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas></View>
-    )
+      <View className='full-screen'>
+        <F2Canvas onCanvasInit={this.initChart.bind(this)}></F2Canvas>
+      </View>
+    );
   }
 }
-
